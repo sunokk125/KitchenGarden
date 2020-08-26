@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<title>kitchen garden</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/join.css">
+        <link rel="stylesheet" href="/css/jquery.flipster.min.css">
+        <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="/js/jquery.flipster.min.js"></script>
+	    <script type="text/JavaScript" src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+        <script>
+            function checkInfo(){
+                if($('.memId').val()==""){
+                    alert("ID를 입력해주세요");
+                    $('.memId').focus();
+                    return false;
+                }
+                if($('.idTf').val()=="false"){
+                    alert("ID 중복확인을 체크해주세요");
+                    $('.memId').focus();
+                    return false;
+                }
+                if($('.memPw').val()==""){
+                    alert("패스워드를 입력해주세요");
+                    $('.memPw').focus();
+                    return false;
+                }
+                if($('.memPwChk').val()==""){
+                    alert("비밀번호 확인을 입력해주세요");
+                    $('.memPwChk').focus();
+                    return false;
+                }
+                
+                if($('.memPwChk').val()!=$('.memPw').val()){
+                    alert("비밀번호와 비밀번호 확인을 같게 입력해주세요");
+                    $('.memPwChk').focus();
+                    return false;
+                }
+
+                if($('.memName').val()==""){
+                    alert("이름을 입력해주세요");
+                    $('.memName').focus();
+                    return false;
+                }
+                if($('.email1').val()==""){
+                    alert("이메일을 입력해주세요");
+                    $('.email1').focus();
+                    return false;
+                }
+                if($('.email2').val()==""){
+                    alert("이메일을 입력해주세요");
+                    $('.email2').focus();
+                    return false;
+                }
+                if($('.phone2').val()==""){
+                    alert("휴대폰 번호를 입력해주세요");
+                    $('.phone2').focus();
+                    return false;
+                }
+                if($('.phone3').val()==""){
+                    alert("휴대폰 번호를 입력해주세요");
+                    $('.phone3').focus();
+                    return false;
+                }
+                if($('.zonecode').val()==""){
+                    alert("주소를 입력해주세요");
+                    $('.zonecode').focus();
+                    return false;
+                }
+                if($('.detailAddress').val()==""){
+                    alert("상세주소를 입력해주세요");
+                    $('.detailAddress').focus();
+                    return false;
+                }
+            }
+            function openDaumZipAddress() {
+
+                new daum.Postcode({
+
+                    oncomplete:function(data) {
+
+                        $("#zonecode").val(data.zonecode);
+
+                        $("#roadAddress").val(data.roadAddress);
+                        $("#jibunAddress").val(data.jibunAddress);
+
+                        $("#detailAddress").focus();
+
+                        console.log(data);
+
+                    }
+
+                }).open();
+
+            }
+
+
+            function idChk(){
+                var id = $('#id').val();
+                $.ajax({
+                    url:'/idChk',
+                    type:'POST',
+                    data:{'id':id},
+                    dataType:'json',
+                    success:function(result){
+                        console.log(result.result);
+                        if(result.result){
+                            $('.check').html('사용 가능한 아이디입니다.');
+                            $('.idTf').val("true");
+                        }else{
+                            $('.check').html('이미 존재하는 아이디입니다.');
+                            $('.idTf').val("false");
+                        }
+                    }
+                });
+            }
+            function email(){
+                var email = $('#email3').val();
+                if(email=='직접입력'){
+                    $('#email2').val("");
+                    $('#email2').focus();
+                    $('#email2').removeAttr("readonly");
+                }else if(email=='naver.com'){
+                    $('#email2').attr("readonly",true);
+                    $('#email2').val("naver.com");
+                }else if(email=='daum.net'){
+                    $('#email2').attr("readonly",true);
+                    $('#email2').val("daum.net");
+                }else if(email=='gmail.com'){
+                    $('#email2').attr("readonly",true);
+                    $('#email2').val("gmail.com");
+                }
+            }
+        </script>
+		
+		
+
+	
+		<!-- 
+			반응형 했던거
+        <link rel="stylesheet" href="css/tablet.css" media="all and (min-width:900px) and (max-width:1242px)">
+		<link rel="stylesheet" href="css/mobile.css" media="all and (min-width:320px) and (max-width:899px)">
+		-->
+		<script src="https://kit.fontawesome.com/d0c252d761.js" crossorigin="anonymous"></script><!--아이콘 링크 -->
+    </head>
+    <body>
+		
+        <header id="main-header">
+			<!--
+			
+			반응형 모바일 햄버거 눌렀을떄 메뉴
+			<nav id="mobile">
+				<div class="mobile_top">
+				<li>
+					<a href="#">로그인</a>
+				</li>
+					<li>
+						/
+					</li>
+				<li>
+					<a href="#">회원가입</a>
+				</li>
+					
+				<li class="button2"><a href="">
+<img src="Images/cart.png" width="23" height="23"></a></li>
+					<br>
+<li class="button1">
+	<i class="xi-search"></i>
+<input type="text" placeholder="Search.." name="search">
+					</li>
+				</div>
+			<ul>
+				<li> 
+					<a href="">텃밭세트 </a>
+				</li>
+				<li>
+					<a href="">씨앗</a>
+				</li>
+				<li>
+					<a href="">모종</a>
+				</li>
+				<li>
+					<a href="">흙</a>
+				</li>
+				<li>
+					<a href="">화분</a> 
+				</li>
+				<li>
+					<a href="">원예도구</a> 
+				</li>
+			</ul>
+		</nav>
+		<a class="tab" href=""><span>tab</span></a>
+	<div class="dim"></div>
+-->
+          
+			<nav class="header_inner">
+				<div class="header_menu">
+					<!--헤더 메뉴-->
+					<div class="logo">
+						<a href="/">
+							<img src="/images/logo.png" width="300" >
+						</a>
+					</div>
+					<!--
+							반응형 로고
+					<div class="logo_mobile">
+						<img src="images/mobile_logo.png" width="150" >
+					</div>
+					
+					<!----검색버튼 누른후 회색 화면 -->		
+					<div id="myOverlay" class="overlay">
+						<div class="overlay-content">
+							<form action="/search" method="post">
+								<p class="closebtn" onclick="closeSearch()" title="Close Overlay">X</p>
+								<input type="text" placeholder="Search.." name="search">
+								<button type="submit"><i class="fas fa-search"></i></button>
+							</form>
+						</div>
+						
+					</div>	
+				<!----검색버튼 누른후 회색 화면 닫기-->		   
+							
+								
+							
+			<!-- 로그인 -->
+					<ul class="head_btn">
+						
+							<li><a href="/join"><span>회원가입</span></a></li>
+							<li><a href="/login"><span>로그인</span></a></li>
+							<li class="button">
+								<button class="openBtn" onclick="openSearch()">
+									<i class="fas fa-search"></i>
+								</button>
+							</li>
+
+					</ul>
+					<!-- 로그인 닫기-->
+
+					<!-- 서브메뉴 -->
+					<ul class="head_sub">
+
+						<li>
+							<a href="/store">
+								<span>STORE</span>
+							</a>
+						</li>
+						<li>
+							<a href="/recipe">
+								<span>베란다 레시피</span>
+							</a>
+						</li>
+						<li>
+							<a href="/garden">
+								<span>텃밭정보</span>
+							</a>
+						</li>
+						<li>
+							<a href="/calender">
+								<span>파종달력</span>
+							</a>
+						</li>
+						<li>
+							<a href="/farm">
+								<span>온라인 텃밭</span>
+							</a>
+						</li>
+					</ul><!-- 서브메뉴 닫기-->
+				</div><!--헤드인-->
+	<!--헤더 메뉴닫기-->
+	<!--헤더닫기-->
+			</nav>
+		</header>
+        
+        
+        <div id="main"> 
+			
+			<!-----회원가입--->
+			
+		<div id="join">
+			<div class="join_text">
+				<tt class="name">회원가입</tt><br>
+			</div>
+			
+            <form action="/join" method="post" onsubmit="return checkInfo()">
+                <table class="id_pw">
+                    <tt class="o">*필수입력사항</tt><br>
+
+                    
+                    <tr>
+                        <td class="id_1">
+                            아이디*
+                        </td>
+                        <td>
+                            <input type="text" name="id" size="50" class="id memId" id="id">
+                            <p class="check" style="font-family: '나눔고딕'; font-size: 14px;"></p>
+                        </td>
+                        <td>
+                            <input type="hidden" value="false" class="idTf">
+                            <input type="button" onclick="idChk()" class="enter" value="중복확인">
+                        </td>
+                    </tr>
+                    
+                    
+                    <tr>
+                        <td class="id_1">
+                            비밀번호*
+                        </td>
+                        <td>
+                            <input type="password" name="pw" size="50" class="id memPw">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="id_1">
+                            비밀번호 확인*
+                        </td>
+                        <td>
+                            <input type="password" name="pwChk" size="50" class="id memPwChk">
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="id_1">
+                            이름*
+                        </td>
+                        <td>
+                            <input type="text" name="name" size="50" class="id memName">
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="id_1">
+                            이메일*
+                        </td>
+                        <td style="width: 600px;">
+                            <input type="text" name="email1" size="50" class="email email1">
+                            <span style="font-family: '나눔 고딕'; font-size: 20px;">@</span>
+                            <input type="text" name="email2" size="50" class="email email2" id="email2">
+                            <select class="email" onchange="email()" id="email3">
+                                <option style="font-family:'나눔 고딕'; font-size: 14px;" selected>직접입력</option>
+                                <option style="font-family:'나눔 고딕'; font-size: 14px;">naver.com</option>
+                                <option style="font-family:'나눔 고딕'; font-size: 14px;">daum.net</option>
+                                <option style="font-family:'나눔 고딕'; font-size: 14px;">gmail.com</option>
+                            </select>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="id_1">
+                            휴대폰*
+                        </td>
+                        <td>
+                            <select class="phone phone1" name="phone1">
+                                <option style="font-family:'나눔 고딕'; font-size: 14px;">010</option>
+                                <option style="font-family:'나눔 고딕'; font-size: 14px;">011</option>
+                                <option style="font-family:'나눔 고딕'; font-size: 14px;">016</option>
+                                <option style="font-family:'나눔 고딕'; font-size: 14px;">017</option>
+                            </select>
+                            <span style="font-family: '나눔 고딕'; font-size: 20px;">-</span>
+                            <input type="text" name="phone2" size="50" class="phone phone2">
+                            <span style="font-family: '나눔 고딕'; font-size: 20px;">-</span>
+                            <input type="text" name="phone3" size="50" class="phone phone3">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="id_1">
+                            주소*
+                        </td>
+                        <td>
+                            <input id="zonecode" name="zonecode" class="address1" type="text" value="" readonly/>
+
+                            &nbsp;
+
+                            <input type="button" class="enter" onClick="openDaumZipAddress();" value = "주소 찾기" />
+
+                            <br/>
+
+                            <input type="text" class="address" id="roadAddress" name="roadAddress" value=""  placeholder="도로명 주소" readonly/>
+                            
+                            <input type="text" class="address" id="jibunAddress" name="jibunAddress" value=""  placeholder="지번 주소" readonly/>
+
+                            <br>
+
+                            <input type="text" id="detailAddress" class="address detailAddress" name="detailAddress" value="" placeholder="상세 주소"/>
+
+                        </td>
+                    </tr>
+                    
+                    
+                        
+                </table>
+                <button type="submit" class="join_btn">
+                    <span class="btn_text">가입하기</span></button>
+			
+            </form>
+		</div>
+			
+		</div>
+
+			
+		<!--푸터-------------->
+			
+            
+ <div id="footer">
+<div class="footer_inner">
+  <div class="copyright"> 
+	  <img src="/images/footer_logo.png" width="250" style="float:left; padding-left: 10px; padding-top:14px; margin-bottom: 38px;"><br><br>
+	  <dt>SHOP NAME : kichen garden &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;OWNER : 강정우</dt>
+	  <dt>Fax. 02-2222-2222   &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;TEL: 02-2222-2222</dt>
+	  <dt>사업자등록번호 : 2222-22-222222 </dt> 
+	  <dt>소재지: 충청남도 천안시 서북구 성환읍 남서울대학교 </dt> 
+  </div> 
+	
+	
+	
+	  <div class="copyright1">
+		  <dd><i class="fas fa-phone-volume"></i>&ensp;02-2222-2222</dd>
+	  <dt>MON - FRI : PM 1:00 ~ PM 6:00</dt>
+	  <dt>(SAT,SUN,HOLIDAY CLOSED)</dt>
+		  <br><br><br>
+	  <dt class="last">Copyright (c) kichen garden All Rights Reserved</dt> 
+  </div>
+	
+	<div class="copyright2">
+		<dd class="follow">follow</dd>
+		<a href="#"><i class="fab fa-facebook-f"></i></a>
+		<a href="#"><i class="fab fa-instagram"></i></a>
+		<a href="#"> <i class="fab fa-twitter"></i></a>
+	  
+		 
+
+  </div>
+  
+</div>
+				</div>
+                
+          
+<!--푸터-------------->
+         <!-- end container -->
+
+<!-- 제이쿼리,스크립트 -->
+       <script src="/js/scripts.js"></script>
+
+    </body>
+</html>

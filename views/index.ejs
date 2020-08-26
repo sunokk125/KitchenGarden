@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<title>kichen garden</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/main_master.css">
+		<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+		
+		
+
+	
+		<!-- 
+			반응형 했던거
+        <link rel="stylesheet" href="css/tablet.css" media="all and (min-width:900px) and (max-width:1242px)">
+		<link rel="stylesheet" href="css/mobile.css" media="all and (min-width:320px) and (max-width:899px)">
+		-->
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+		<script src="https://kit.fontawesome.com/d0c252d761.js" crossorigin="anonymous"></script><!--아이콘 링크 -->
+    </head>
+    <body>
+		
+        <header id="main-header">
+			<!--
+			
+			반응형 모바일 햄버거 눌렀을떄 메뉴
+			<nav id="mobile">
+				<div class="mobile_top">
+				<li>
+					<a href="#">로그인</a>
+				</li>
+					<li>
+						/
+					</li>
+				<li>
+					<a href="#">회원가입</a>
+				</li>
+					
+				<li class="button2"><a href="">
+<img src="Images/cart.png" width="23" height="23"></a></li>
+					<br>
+<li class="button1">
+	<i class="xi-search"></i>
+<input type="text" placeholder="Search.." name="search">
+					</li>
+				</div>
+			<ul>
+				<li> 
+					<a href="">텃밭세트 </a>
+				</li>
+				<li>
+					<a href="">씨앗</a>
+				</li>
+				<li>
+					<a href="">모종</a>
+				</li>
+				<li>
+					<a href="">흙</a>
+				</li>
+				<li>
+					<a href="">화분</a> 
+				</li>
+				<li>
+					<a href="">원예도구</a> 
+				</li>
+			</ul>
+		</nav>
+		<a class="tab" href=""><span>tab</span></a>
+	<div class="dim"></div>
+-->
+          
+			<nav class="header_inner">
+				<div class="header_menu">
+					<!--헤더 메뉴-->
+					<div class="logo">
+						<a href="/">
+							<img src="/images/logo1.png" width="300" >
+						</a>
+					</div>
+					<!--
+							반응형 로고
+					<div class="logo_mobile">
+						<img src="images/mobile_logo.png" width="150" >
+					</div>
+					
+					<!----검색버튼 누른후 회색 화면 -->		
+					<div id="myOverlay" class="overlay">
+						<div class="overlay-content">
+							<form action="/search" method="post">
+								<p class="closebtn" onclick="closeSearch()" title="Close Overlay">X</p>
+								<input type="text" placeholder="Search.." name="search">
+								<button type="submit"><i class="fas fa-search"></i></button>
+							</form>
+						</div>
+						
+					</div>	
+				<!----검색버튼 누른후 회색 화면 닫기-->		   
+							
+								
+							
+			<!-- 로그인 -->
+					<ul class="head_btn">
+						<%
+							if(session){
+						%>
+							<li><a href="/mypage"><span>마이페이지</span></a></li>
+							<li><a href="/logout"><span>로그아웃</span></a></li>
+							<li><%=session.name%>님, 어서오세요</li>
+							<li><a href="/cart">
+								<span><i class="fas fa-shopping-cart"></i></span></a></li>
+							<li class="button">
+								<button class="openBtn" onclick="openSearch()">
+									<i class="fas fa-search"></i>
+								</button>
+							</li>
+						<%
+							}else{
+						%>
+							<li><a href="/join"><span>회원가입</span></a></li>
+							<li><a href="/login"><span>로그인</span></a></li>
+							<li class="button">
+								<button class="openBtn" onclick="openSearch()">
+									<i class="fas fa-search"></i>
+								</button>
+							</li>
+						<%
+							}
+						%>
+
+					</ul>
+					<!-- 로그인 닫기-->
+
+					<!-- 서브메뉴 -->
+					<ul class="head_sub">
+
+						<li>
+							<a href="/store">
+								<span>STORE</span>
+							</a>
+						</li>
+						<li>
+							<a href="/recipe">
+								<span>베란다 레시피</span>
+							</a>
+						</li>
+						<li>
+							<a href="/garden">
+								<span>텃밭정보</span>
+							</a>
+						</li>
+						<li>
+							<a href="/calender">
+								<span>파종달력</span>
+							</a>
+						</li>
+						<li>
+							<a href="/farm">
+								<span>온라인 텃밭</span>
+							</a>
+						</li>
+					</ul><!-- 서브메뉴 닫기-->
+				</div><!--헤드인-->
+	<!--헤더 메뉴닫기-->
+	<!--헤더닫기-->
+			</nav>
+		</header>
+        
+        <div id="main"> 
+			
+			<div id="image">
+
+				<div class="online_graden">
+					<p class="online_graden_name">
+						텃밭경험이 '0' 인 당신<br>
+						<strong class="box_name">온라인 텃밭</strong>에서 	미리 키워보고<br>
+						실패하지 마세요
+					</p>
+						<a href="/farm"><div class="online_graden_text"> 온라인텃밭 바로가기</div></a>
+					</div>
+				</div>
+				
+				<div id="calendar">
+						<p class="garden_info_text"> 파종달력</p>
+					<img src="/images/main_calendar.png" style="border:0.6px solid #44704D; border-radius: 10px; margin-top: 30px;">
+					<a href="/calender">
+					<p class="calendar_go">파종 달력 더보기</p>
+					</a>
+				</div>
+				
+			
+				
+				<!--파종달력-->
+				
+				<section class="module parallax parallax-1">
+	<div class="container_parallox">
+		<strong class="parallox_name"> 이달의 작물</strong>
+			 
+				  <div class="calendar">
+				 <div class="calendar_text_box">
+						<p class="calendar_text">
+							이번달 농작물
+						</p>
+						<p class="calendar_text_a">
+							<a href="/goods/1" class="calendar_text_a">
+								청치마 상추
+							</a>
+						</p>
+						<p class="calendar_text_b">
+							이번주 농작물
+						</p>
+						<p class="calendar_text_a">
+							<a href="/goods/5" class="calendar_text_a">
+								시금치
+							</a> , <a href="/goods/7" class="calendar_text_a">
+								쑥갓
+							</a>
+						</p>
+						<p class="calendar_text_b">
+							오늘의 농작물
+						</p>
+						<p class="calendar_text_a">
+							<a href="/goods/4" class="calendar_text_a">
+								깻잎
+							</a> , <a href="/goods/8" class="calendar_text_a">
+								청경채
+							</a>
+						</p>
+					</div>
+					<div class="calendar_text_box2">
+						<p class="calendar_text_c">
+							~재철과일~
+						</p>
+						<p class="calendar_text_d">
+							<a href="/goods/14" class="calendar_text_a">
+								토마토
+							</a>
+						</p>
+						<p class="calendar_text_c">
+							~재철채소~
+						</p>
+						<p class="calendar_text_d">
+							<a href="/goods/5" class="calendar_text_a">
+								시금치
+							</a> , <a href="/goods/13" class="calendar_text_a">
+								비트
+							</a> , <a href="/goods/22" class="calendar_text_a">
+								아욱
+							</a>
+						</p>
+					</div>
+				  </div>
+			   
+			</div>
+		  </section>
+				<!--
+				<img src="images/toma1 (1).png" 
+						 style="position: relative;
+								left: 1100px;
+								bottom: 35px;">
+				<img src="images/toma1 (2).png" 
+					 style="position: relative;
+							left:31px;
+							top:240px;">
+				<img src="images/toma1 (3).png"
+					 style="position: relative;
+							float: right;
+							right:304px;
+							top:200px;">
+													 
+				-->
+				<!---------------텃밭정보 ---------->
+				
+			<div class="main_best"><!--메인_베스트-->
+	<a href="">
+	<div class="sub_best">
+		<p class="garden_info_text">BEST 작물</p>
+	</a>
+	<ul class="best">
+	<section class="autoplay">
+		<%
+			for(var i=0;i < best.length; i++){		
+		%>
+
+		<div class="qwe">
+			<a href="/goods/<%=best[i].g_id%>">
+				<img src="images/store_sum_img_<%=best[i].g_id%>.png" >
+				<strong class="best_name">
+					<span class="best_product_name">
+						<%=i+1%>. <%=best[i].name%>
+					</span>
+					<span class="best_product_price"><%=best[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%>원</span>
+				</strong>
+			</a>
+		</div>
+		<%
+			}
+		%>
+	</section>
+	
+	
+	
+	
+	</ul>
+	
+	
+	</div><!--베스트상품 div닫기-->
+				</div>
+				
+				
+				
+				<div class="main_best"><!--메인_베스트-->
+	<a href="">
+	<div class="sub_best">
+		<p class="garden_info_text">이달의 레시피</p>
+	</a>
+	
+	
+	
+	</div><!--베스트상품 div닫기-->
+				</div>	
+							<div id="recipe">
+								<img src="images/recipe_image1.png" style="margin-left: 390px;float: left; border-radius: 30px;">
+					
+								<!--<img src="images/recipe_image2.png" 
+						 style="position: relative;
+								top:310px;
+								margin-left:-95px; 
+								float: left;
+								">
+					-->
+					<div class="recipe_box">
+						<p class="recipe_box_name">
+							오이고추된장무침
+						</p>
+						<ol>
+							<tt>①</tt>&nbsp; <tt class="number">오이고추를 먹기좋은 크기로 잘라주세요.</tt><br><br>
+							<tt>②</tt>&nbsp; <tt class="number">된장,고춧가루,다진마늘,참기름,설,물을 넣어 주세요.
+	</tt><br><br>
+							<tt>③</tt>&nbsp; <tt class="number">참깨는 잘게 다진뒤 된장양념에 넣어 골고루 섞어주세요.
+	</tt><br><br>
+							<tt>④</tt>&nbsp; <tt class="number">잘라놓은 오이고추와 양념장을 볼에 담아 주세요.
+	손에 힘을 주어 섞다보면 오이고추가 으깨질수 있으니 살살 묻혀 주세요,
+	</tt><br><br>
+							<tt>⑤</tt> &nbsp;<tt class="number">볼에담긴 오이고추와 양념장을 잘 버무려 주세요,
+	</tt><br><br>
+							<tt>⑥</tt> &nbsp;<tt class="number">양념된 오이고추 된장무침을 접시에 담아주시면 맛있는 한끼 반찬이 완성 된답니다.
+						</ol>
+							<a href="/recipe/1"><div class="recipe_btn">레시피 자세히 보러가기</div></a>
+					</div>
+						<!---
+					<div class="red_line">
+						<img src="images/line.png">
+	</div>
+				
+					<a href="#"><div class="recipe_btn">레시피 자세히 보러가기</div></a>
+							!-->
+				</div>
+						
+						
+							<div id="garden_info">
+					<p class="garden_info_text"> 텃밭 정보</p>
+					
+					
+					
+					<div class="info_info">
+					<p class="garden_info_name">방금 올라온 텃밭</p>
+					<a href="/garden_detail/<%=newly.gr_id%>">
+					<div class="garden_info">
+							<i class="fas fa-seedling"></i> <tt class="number1">001</tt><br>
+							<strong class="subject"><%=newly.name%></strong> <br>
+							<div class="line"></div><br>
+							
+							
+							<div class="a">
+							<i class="fas fa-home"></i><tt class="add">주소</tt>&nbsp;
+							<tt class="add_info"> <%=newly.jibunaddress%></tt> 
+							</div>
+							
+							
+							<div class="b">
+							<i class="fas fa-mobile-alt"></i><tt class="phone">연락처</tt>&nbsp;
+							<tt class="phone_info"> <%=newly.phone%></tt> <br>
+							</div>
+							
+							<div class="c">
+							<i class="far fa-square"></i><tt class="area">전체면적</tt>&nbsp;
+							<tt class="area_info"><%=newly.all_area.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%>㎡</tt> <br>
+							<tt class="area1">분양면적</tt>
+							<tt class="area_info1"><%=newly.area.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%>㎡</tt>
+							</div>
+							
+							<div class="d">
+								<i class="fas fa-won-sign"></i><tt class="price">분양가격</tt>&nbsp;
+								<tt class="price_info"><%=newly.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%>원</tt> <br>
+							</div>
+							
+						</div>
+						</a>
+					</div>
+					
+					
+					<div class="sudden_sale">
+						<p class="garden_info_name">분양정보</p>
+						
+						<table class="sudden_sale_list">
+							<%
+								for(var i=0; i< gardens.length;i++){
+									
+							%>
+								<tr>
+									<td colspan="3" class="sudden">
+									<tt class="sudden_sale_add">주소</tt>
+									<tt class="sudden_sale_add1"><%=gardens[i].jibunaddress%> (<%=gardens[i].area.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%>㎡,<%=gardens[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%>원) </tt>
+										<a href="/garden_detail/<%=gardens[i].gr_id%>"><i class="fas fa-plus-circle"></i></a>
+									</td>
+								</tr>
+							
+							<%
+							
+								}
+							%>
+						</table>
+					</div>
+					
+			
+				</div>
+			
+			
+
+
+
+			<div id="line"></div>
+			
+		<!--푸터-------------->
+			
+            
+ <div id="footer">
+<div class="footer_inner">
+  <div class="copyright"> 
+	  <img src="/images/footer_logo.png" width="250" style="float:left; padding-left: 10px; padding-top:26px; margin-bottom: 38px;"><br><br>
+	  <dt>SHOP NAME : kichen garden &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;OWNER : 강정우</dt>
+	  <dt>Fax. 02-2222-2222   &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;TEL: 02-2222-2222</dt>
+	  <dt>사업자등록번호 : 2222-22-222222 </dt> 
+	  <dt>소재지: 충청남도 천안시 서북구 성환읍 남서울대학교 </dt> 
+  </div> 
+	
+	
+	
+	  <div class="copyright1">
+		  <dd><i class="fas fa-phone-alt"></i>&ensp;02-2222-2222</dd>
+	  <dt>MON - FRI : PM 1:00 ~ PM 6:00</dt>
+	  <dt>(SAT,SUN,HOLIDAY CLOSED)</dt>
+		  <br><br><br>
+	  <dt class="last">Copyright (c) kichen garden All Rights Reserved</dt> 
+  </div>
+	
+	<div class="copyright2">
+		<dd class="follow">follow</dd>
+		<a href="#"><i class="fab fa-facebook-f"></i></a>
+		<a href="#"><i class="fab fa-instagram"></i></a>
+		<a href="#"> <i class="fab fa-twitter"></i></a>
+	  
+		 
+
+  </div>
+  
+</div>
+				</div>
+                
+          
+<!--푸터-------------->
+        </div> <!-- end container -->
+
+<!-- 제이쿼리,스크립트 -->
+		<script src="/js/jquery-3.1.1.min.js"></script>
+       <script src="/js/scripts.js"></script>
+	 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script type="text/javascript">
+
+
+
+
+$('.autoplay').slick({
+  slidesToShow: 4,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 2000,
+});
+
+</script>	
+    </body>
+</html>

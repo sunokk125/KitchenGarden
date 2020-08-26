@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title></title>
+        <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+        <script>
+            function watering(){
+                var sessionId = $('#sessionId').val();
+                $.ajax({
+                    url:'/water',
+                    type:'POST',
+                    data:{'sessionId':sessionId},
+                    dataType:'json',
+                    success:function(result){
+                        console.log(result);
+                        console.log(result.result);
+                        console.log(result.count);
+                        var count = result.count;
+                        var time = result.time;
+                        if(!result.result){
+                            alert('이미 오늘은 물을 주었습니다!');
+                            $('.time').html(time);
+                        }else{
+                            alert('물을 주었습니다!');
+                            if(count==2){
+                                alert('씨앗을 다키웠습니다!');
+                                var form = document.createElement("form");
+                                form.setAttribute("method","post");
+                                form.setAttribute("action","/harvest");
+                                
+                                var input1 = document.createElement("input");
+                                input1.setAttribute("type","hidden");
+                                input1.setAttribute("name","u_id");
+                                input1.setAttribute("value","<%=session.u_id%>");
+                                form.appendChild(input1);
+
+                                document.body.appendChild(form);
+                                form.submit();
+                                
+                            }else{
+                                $('.count').html(count);
+                                $('.time').html(time);
+                            }
+                        }
+                    },
+                    fail:function(error){
+                        console.log(error);
+                    }
+            
+                });
+            }
+
+        </script>
+    </head>
+    <body>
+        <%=session.id%>님 , 환영합니다 물 준횟수:<p class="count"><%=count%></p><p class="time">시간</p>
+        <input type="hidden" id="sessionId" value="<%=session.u_id%>">
+        <button onClick="watering()">물주기</button>
+    </body>
+</html>

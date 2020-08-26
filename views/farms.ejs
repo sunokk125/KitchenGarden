@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<title>kichen garden</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/online_garden1.css">
+		 <link rel="stylesheet" href="/css/jquery.flipster.min.css">
+		 <script src="/js/jquery-3.1.1.min.js"></script>
+		<script src="/js/jquery.flipster.min.js"></script>
+		<script src="/js/scripts.js"></script>
+		<script>
+			
+			function openPopUp() {
+				document.getElementById("popUp1").style.display = "inline-block";
+			}
+			function closePopUp() {
+				document.getElementById("popUp1").style.display = "none";
+			}
+			function openPopUp2() {
+				document.getElementById("popUp2").style.display = "inline-block";
+			}
+			function closePopUp2() {
+				document.getElementById("popUp2").style.display = "none";
+			}
+			function saveSeed(num){
+				var sessionId = $('#sessionId').val();
+				var goodId;
+				if(num==1){
+					var goodId=$('.sangchu').val();
+				}else if(num==2){
+					var goodId=$('.reap').val();
+				}else if(num==3){
+					var goodId=$('.baechu').val();
+				}else if(num==4){
+					var goodId=$('.bburi').val();
+				}else if(num==5){
+					var goodId=$('.fruit').val();
+				}else if(num==6){
+					var goodId=$('.hurb').val();
+				}
+				if(goodId=="0"){
+					alert("씨앗을 선택해주세요");
+				}else{
+					$.ajax({
+						url:'/saveSeed',
+						type:'POST',
+						data:{'sessionId':sessionId,'goodId':goodId},
+						dataType:'json',
+						success:function(result){
+							console.log(result.loadFid);
+							alert('씨앗을 심었습니다!!');
+							$('.my_seed').empty();
+							var option = $("<option class='seed1'>"+"선택하세요"+"</option>");
+							$('.my_seed').append(option);
+							
+							for(var i= 0; i < result.loadFid.length; i++){                
+									var option = $("<option value='"+result.loadFid[i].f_id+"' class='seed1'>"+result.loadFid[i].printname+"</option>");
+									$('.my_seed').append(option);
+							}
+
+						}
+					});
+
+				}
+			}
+			function changeMySeed(){
+				var fid=$('.my_seed').val();
+				console.log(fid);
+				$.ajax({
+					url:'/changeMySeed',
+					type:'POST',
+					data:{'fid':fid},
+					dataType:'json',
+					success:function(result){
+						console.log(result.result);
+						console.log(result.result.g_id);
+						var g_id=result.result.f_g_id;
+						var kind = result.result.kind;
+						var water = result.result.water;
+						var max_water=result.result.max_water/5;
+						console.log(water);
+						console.log(max_water);
+
+						$('.water').html(water);
+						$('.maxWater').html(max_water);
+						$('.manure').val(result.result.manure);
+						$('.remove').val(result.result.remove);
+						$('.pesticide').val(result.result.pesticide);
+						$('.temp').val(result.result.farm_tem);
+						$('.farms_name').html(result.result.printname);
+						$('.stick').val(water/max_water*100);
+						$('.stick_max').val(max_water);
+						$('.stick_water').val(water);
+
+						var num = water/max_water*3;
+						console.log(num);
+						if(num<1){
+							$('.stick').val(num*100);
+						}else if(num>=1&&num<2){
+							$('.stick').val((num-1)*100);
+						}else if(num>=2&&num<3){
+							$('.stick').val((num-2)*100);
+						}
+
+						if(result.result.manure){
+							$('.farms_manure').html("○");
+						}else{
+							$('.farms_manure').html("X");
+						}
+						if(result.result.remove){
+							$('.farms_remove').html("○");
+							$('#glass1').css('display','inline-block');
+							$('#glass2').css('display','inline-block');
+						}else{
+							$('.farms_remove').html("X");
+							$('#glass1').css('display','none');
+							$('#glass2').css('display','none');
+						}
+						if(result.result.pesticide){
+							$('.farms_pesticide').html("○");
+							$('#bug1').css('display','inline-block');
+							$('#bug2').css('display','inline-block');
+						}else{
+							$('.farms_pesticide').html("X");
+							$('#bug1').css('display','none');
+							$('#bug2').css('display','none');
+						}
+						/*
+							<img src="/images/online_farm_img0.png" style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>*/
+						
+						seedImg(kind,water,max_water);
+						
+						$('.tip').empty();
+						var tip_img1=$("<img src='/images/seed_feature"+g_id+".png' style='width:100%'>");
+						$('.tip').append(tip_img1);
+					}
+				});
+
+			}
+			function seedImg(kind,water,max_water){
+				if(kind==1){
+					if((water>=max_water/3)&&(water<(max_water/3)*2)){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img1_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 360px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img1_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 360px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img1_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 360px; width: 60px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else if((water>=(max_water/3)*2)&&(water<max_water)){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img1_2.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 300px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img1_2.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 300px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img1_2.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 300px; width: 160px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else if(water==max_water){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img1_3.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 250px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img1_3.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 250px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img1_3.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 250px; width: 160px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else{
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}
+				}else if(kind==2){
+					if((water>=max_water/3)&&(water<(max_water/3)*2)){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img2_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 340px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img2_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 340px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img2_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 340px; width: 60px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else if((water>=(max_water/3)*2)&&(water<max_water)){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img2_2.PNG' style='position: relative; overflow-y:hidden; margin-left:120px;margin-top: 290px; width: 110px;' id='plant'>"+
+							"<img src='/images/online_farm_img2_2.PNG' style='position: relative; overflow-y:hidden; margin-left:120px;margin-top: 290px; width: 110px;' id='plant'>"+
+							"<img src='/images/online_farm_img2_2.PNG' style='position: relative; overflow-y:hidden; margin-left:120px;margin-top: 290px; width: 110px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else if(water==max_water){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img2_3.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 240px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img2_3.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 240px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img2_3.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 240px; width: 160px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else{
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}
+				}else if(kind==3){
+					if((water>=max_water/3)&&(water<(max_water/3)*2)){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img3_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 370px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img3_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 370px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img3_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 370px; width: 60px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else if((water>=(max_water/3)*2)&&(water<max_water)){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img3_2.PNG' style='position: relative; overflow-y:hidden; margin-left:120px;margin-top: 330px; width: 110px;' id='plant'>"+
+							"<img src='/images/online_farm_img3_2.PNG' style='position: relative; overflow-y:hidden; margin-left:120px;margin-top: 330px; width: 110px;' id='plant'>"+
+							"<img src='/images/online_farm_img3_2.PNG' style='position: relative; overflow-y:hidden; margin-left:120px;margin-top: 330px; width: 110px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else if(water==max_water){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img3_3.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 190px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img3_3.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 190px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img3_3.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 190px; width: 160px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else{
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}
+				}else if(kind==4){
+					if((water>=max_water/3)&&(water<(max_water/3)*2)){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img4_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 350px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img4_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 350px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img4_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 350px; width: 60px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else if((water>=(max_water/3)*2)&&(water<max_water)){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img4_2.PNG' style='position: relative; overflow-y:hidden; margin-left:110px;margin-top: 270px; width: 140px;' id='plant'>"+
+							"<img src='/images/online_farm_img4_2.PNG' style='position: relative; overflow-y:hidden; margin-left:110px;margin-top: 270px; width: 140px;' id='plant'>"+
+							"<img src='/images/online_farm_img4_2.PNG' style='position: relative; overflow-y:hidden; margin-left:110px;margin-top: 270px; width: 140px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else if(water==max_water){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img4_3.PNG' style='position: relative; overflow-y:hidden; margin-left:90px;margin-top: 240px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img4_3.PNG' style='position: relative; overflow-y:hidden; margin-left:90px;margin-top: 240px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img4_3.PNG' style='position: relative; overflow-y:hidden; margin-left:90px;margin-top: 240px; width: 160px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else{
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}
+				}else if(kind==5){
+					if((water>=max_water/3)&&(water<(max_water/3)*2)){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img5_1.PNG' style='position: relative; overflow-y:hidden; margin-left:90px;margin-top: 230px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img5_1.PNG' style='position: relative; overflow-y:hidden; margin-left:90px;margin-top: 230px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img5_1.PNG' style='position: relative; overflow-y:hidden; margin-left:90px;margin-top: 230px; width: 160px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else if((water>=(max_water/3)*2)&&(water<max_water)){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img5_2.PNG' style='position: relative; overflow-y:hidden; margin-left:90px;margin-top: 180px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img5_2.PNG' style='position: relative; overflow-y:hidden; margin-left:90px;margin-top: 180px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img5_2.PNG' style='position: relative; overflow-y:hidden; margin-left:90px;margin-top: 180px; width: 160px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else if(water==max_water){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img5_3.PNG' style='position: relative; overflow-y:hidden; margin-left:90px;margin-top: 180px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img5_3.PNG' style='position: relative; overflow-y:hidden; margin-left:90px;margin-top: 180px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img5_3.PNG' style='position: relative; overflow-y:hidden; margin-left:90px;margin-top: 180px; width: 160px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else{
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}
+				}else if(kind==6){
+					if((water>=max_water/3)&&(water<(max_water/3)*2)){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img6_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 340px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img6_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 340px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img6_1.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 340px; width: 60px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else if((water>=(max_water/3)*2)&&(water<max_water)){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img6_2.PNG' style='position: relative; overflow-y:hidden; margin-left:120px;margin-top: 330px; width: 110px;' id='plant'>"+
+							"<img src='/images/online_farm_img6_2.PNG' style='position: relative; overflow-y:hidden; margin-left:120px;margin-top: 330px; width: 110px;' id='plant'>"+
+							"<img src='/images/online_farm_img6_2.PNG' style='position: relative; overflow-y:hidden; margin-left:120px;margin-top: 330px; width: 110px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else if(water==max_water){
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img6_3.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 270px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img6_3.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 270px; width: 160px;' id='plant'>"+
+							"<img src='/images/online_farm_img6_3.PNG' style='position: relative; overflow-y:hidden; margin-left:80px;margin-top: 270px; width: 160px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}else{
+						$('#plantBox').empty();
+						var img=$(
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"+
+							"<img src='/images/online_farm_img0.PNG' style='position: relative; overflow-y:hidden; margin-left:160px;margin-top: 400px; width: 60px;' id='plant'>"
+							);
+						$('#plantBox').append(img);
+					}
+				}
+			}
+			function manure(){
+				var fid=$('.my_seed').val();
+				console.log(fid);
+				if(fid=="선택하세요"){
+					alert('내작물을 선택해주세요!');
+				}else{
+					$.ajax({
+						url:'/manure',
+						type:'POST',
+						data:{'fid':fid},
+						dataType:'json',
+						success:function(result){
+							if(!result.tf){
+								alert("거름을 주었습니다!");
+								$('.manure').val(result.result.manure);
+								$('.farms_manure').html("○");
+							}else{
+								alert("이미 거름을 주었습니다!");
+							}
+						}
+					});
+				}
+			}
+			function remove(){
+				var fid=$('.my_seed').val();
+				var remove=$('.remove').val();
+				console.log(fid);
+				if(fid=="선택하세요"){
+					alert('내작물을 선택해주세요!');
+				}else{
+					if(remove=='false'){
+						alert('잡초가 자라지않았습니다!')
+					}else{
+						$.ajax({
+							url:'/remove',
+							type:'POST',
+							data:{'fid':fid},
+							dataType:'json',
+							success:function(result){
+								$('#glass1').css('display','none');
+								$('#glass2').css('display','none');
+								alert('잡초 제거 완료!');
+								$('.remove').val("false");
+								$('.farms_remove').html("X");
+							}
+						});
+
+					}
+				}
+
+			}
+			function pesticide(){
+				var fid=$('.my_seed').val();
+				var pesticide=$('.pesticide').val();
+				console.log(fid);
+				if(fid=="선택하세요"){
+					alert('내작물을 선택해주세요!');
+				}else{
+					if(pesticide=='false'){
+						alert('병충해가 없습니다!');
+					}else{
+						$.ajax({
+							url:'/pesticide',
+							type:'POST',
+							data:{'fid':fid},
+							dataType:'json',
+							success:function(result){
+								$('#bug1').css('display','none');
+								$('#bug2').css('display','none');
+								alert('병충해 제거완료!');
+								$('.pesticide').val("false");
+								$('.farms_pesticide').html("X");
+							}
+						});
+
+					}
+				}
+				
+			}
+			
+			function watering(){
+				var sessionId = $('#sessionId').val();
+				var fid = $('.my_seed').val();
+				var manure = $('.manure').val();
+				var remove =$('.remove').val();
+				var pesticide =$('.pesticide').val();
+				var stick_max=$('.stick_max').val();
+				var stick_water=$('.stick_water').val();
+				if(fid=="선택하세요"){
+					alert('내작물을 선택해주세요!');
+				}else{
+					if(manure=="false"){
+					alert('거름을 주어야합니다!');
+					}else if(remove=="true"){
+						alert('잡초를 제거해주어야합니다!');
+					}else if(pesticide=="true"){
+						alert('병충해를 제거해주어야합니다!');
+					}else{
+						var stick_num=stick_water/stick_max*3;
+						$.ajax({
+							url:'/water',
+							type:'POST',
+							data:{'sessionId':sessionId,'f_id':fid},
+							dataType:'json',
+							success:function(result){
+								var water = result.count;
+								var max_water = result.maxWater/5;
+								if(!result.result){
+									alert('이미 오늘은 물을 주었습니다!');
+								}else{
+									$(function(){
+										$('#sprayer').css('visibility','visible').delay(500).animate(
+											{marginLeft:'250px', marginTop:'70px'} ,
+											1000, 'swing' , function(){
+												var angle = 0;
+												interval1=setInterval(function(){
+													angle+=5;
+													
+													if(angle==45){
+														clearInterval(interval1);
+														$('#water').css('visibility','visible');
+														setTimeout(function(){
+															$('#water').css('visibility','hidden');
+															$('#sprayer').css({transform:'rotate(0deg)'})
+														},1000);
+
+													}else{
+														$("#sprayer").css({transform:'rotate('+angle+'deg)'});
+													}
+												},50);
+											}
+										).delay(2000).animate(
+											{marginLeft:'0px', marginTop:'0px'} ,
+											1000, 'swing' , function(){
+												$('#sprayer').css('visibility','hidden');
+												alert('물을 주었습니다!');
+												if(water==max_water){
+													alert('씨앗을 다키웠습니다!');
+													var form = document.createElement("form");
+													form.setAttribute("method","post");
+													form.setAttribute("action","/harvest");
+													
+													var input1 = document.createElement("input");
+													input1.setAttribute("type","hidden");
+													input1.setAttribute("name","u_id");
+													input1.setAttribute("value","<%=session.u_id%>");
+													form.appendChild(input1);
+
+													document.body.appendChild(form);
+													form.submit();
+													
+												}else{
+													console.log("remove:"+result.seed.remove);
+													console.log("pesticide:"+result.seed.pesticide);
+													if(result.seed.remove){
+														$('#glass1').css('display','inline-block');
+														$('#glass2').css('display','inline-block');
+														alert("잡초가 자라고있다!");
+														$('.remove').val(result.seed.remove);
+														$('.farms_remove').html("○");
+													}else if(result.seed.pesticide){
+														$('#bug1').css('display','inline-block');
+														$('#bug2').css('display','inline-block');
+														alert("병충해 발생!");
+														$('.pesticide').val(result.seed.pesticide);
+														$('.farms_pesticide').html("○");
+													}
+
+													var num = water/max_water*3;
+													var kind =result.seed.kind;
+													console.log(kind);
+
+													if(num<1){
+														$('.stick').val(num*100);
+													}else if(num>=1&&num<2){
+														$('.stick').val((num-1)*100);
+													}else if(num>=2&&num<3){
+														$('.stick').val((num-2)*100);
+													}
+													seedImg(kind,water,max_water)
+													
+													$('.stick_water').val(water);
+													$('.water').html(water);
+													console.log("stick_num : "+stick_num+"\n"+"num : "+num);
+													if((Math.floor(stick_num)!=Math.floor(num))&&(num>=1&&num<2)){
+														openPopUp();
+													}else if((Math.floor(stick_num)!=Math.floor(num))&&(num>=2&&num<3)){
+														openPopUp2();
+													}
+												}
+											}
+										);
+									});
+								}
+							},
+							fail:function(error){
+								console.log(error);
+							}
+					
+						});
+
+					}
+
+				}
+				
+				
+            }
+
+		</script>
+		<!-- 
+			반응형 했던거
+        <link rel="stylesheet" href="css/tablet.css" media="all and (min-width:900px) and (max-width:1242px)">
+		<link rel="stylesheet" href="css/mobile.css" media="all and (min-width:320px) and (max-width:899px)">
+		-->
+		<script src="https://kit.fontawesome.com/d0c252d761.js" crossorigin="anonymous"></script><!--아이콘 링크 -->
+    </head>
+    <body>
+		
+        <header id="main-header">
+			<nav class="header_inner">
+				<div class="header_menu">
+					<!--헤더 메뉴-->
+					<div class="logo">
+						<a href="/">
+							<img src="/images/logo.png" width="300" >
+						</a>
+					</div>
+					<!--
+							반응형 로고
+					<div class="logo_mobile">
+						<img src="images/mobile_logo.png" width="150" >
+					</div>
+					
+					<!----검색버튼 누른후 회색 화면 -->		
+					<div id="myOverlay" class="overlay">
+						<div class="overlay-content">
+							<form action="/search" method="post">
+								<p class="closebtn" onclick="closeSearch()" title="Close Overlay">X</p>
+								<input type="text" placeholder="Search.." name="search">
+								<button type="submit"><i class="fas fa-search"></i></button>
+							</form>
+						</div>
+						
+					</div>	
+				<!----검색버튼 누른후 회색 화면 닫기-->		  
+
+				<!--팁 팝업-->
+				<div id="popUp1" class="overlay_popup">
+					<img src="/images/close.png" id="closeIcon" onclick="closePopUp()">
+					<div class="gtip">
+						<b>물을 주실 때는 이렇게 해주세요</b><br><br>
+						싹이 약 1cm 정도로 자랐다<br><br> 
+
+						햇빛을 충분히 보게 해주세요<br><br> 
+
+						물을 줄때는 해가 없을때 물을 주세요<br>
+						(물은 흙이 촉촉해질 정도로만 적당히 주세요)<br><br>
+						<img src="/images/popup1.jpg" style="width: 300px;">
+					</div>
+				</div>
+				<div id="popUp2" class="overlay_popup2">
+					<img src="/images/close.png" id="closeIcon" onclick="closePopUp2()">
+					<div class="gtip2">
+						<b>솎아내기</b><br><br>
+						
+						싹의 잎이 2개,3개씩 보이기 시작해요<br><br>
+
+						이제 겉보기에 튼튼해보이는 친구들이 더 잘 자랄 수 있도록<br><br>
+
+						솎아내기를 시작해주세요<br><br>
+						<img src="/images/popup2.jpg" style="width: 300px;">
+					</div>
+				</div>
+
+
+				<!--팁 팝업 끝-->
+							
+										
+			<!-- 로그인 -->
+					<ul class="head_btn">
+						<%
+							if(session){
+						%>
+							<li><a href="/mypage"><span>마이페이지</span></a></li>
+							<li><a href="/logout"><span>로그아웃</span></a></li>
+							<li><%=session.name%>님, 어서오세요</li>
+							<li><a href="/cart">
+								<span><i class="fas fa-shopping-cart"></i></span></a></li>
+							<li class="button">
+								<button class="openBtn" onclick="openSearch()">
+									<i class="fas fa-search"></i>
+								</button>
+							</li>
+						<%
+							}else{
+						%>
+							<li><a href="/join"><span>회원가입</span></a></li>
+							<li><a href="/login"><span>로그인</span></a></li>
+							<li class="button">
+								<button class="openBtn" onclick="openSearch()">
+									<i class="fas fa-search"></i>
+								</button>
+							</li>
+						<%
+							}
+						%>
+
+					</ul>
+					<!-- 로그인 닫기-->
+
+					<!-- 서브메뉴 -->
+					<ul class="head_sub">
+
+						<li>
+							<a href="/store">
+								<span>STORE</span>
+							</a>
+						</li>
+						<li>
+							<a href="/recipe">
+								<span>베란다 레시피</span>
+							</a>
+						</li>
+						<li>
+							<a href="/garden">
+								<span>텃밭정보</span>
+							</a>
+						</li>
+						<li>
+							<a href="/calender">
+								<span>파종달력</span>
+							</a>
+						</li>
+						<li>
+							<a href="/farm">
+								<span>온라인 텃밭</span>
+							</a>
+						</li>
+					</ul><!-- 서브메뉴 닫기-->
+				</div><!--헤드인-->
+	<!--헤더 메뉴닫기-->
+	<!--헤더닫기-->
+			</nav>
+		</header>
+        
+        
+        <div id="main"> 
+			
+			<!-----온라인 텃밭--->
+			
+			<div id="keyimage">
+				<div class="online_garden_name">
+					온라인 텃밭
+				</div>
+			</div>
+			<div id="online_garden_content">
+				<div class="online_garden_info">
+					<div class="info_text_name">
+						<p class="text_line">온라인 텃밭 사용방법</p>
+						<img src="/images/online_garden_info.PNG">
+					</div>
+				
+					
+				
+				</div>
+				<div class="online_garden_name">
+					씨앗 정하기
+				</div>
+				
+				<div class="choice">
+				<div class="online_garden_choice">
+					<select name="seed" class="seed sangchu">
+						<option value="0" class="seed1">상추류</option>
+						<%
+							for(var i=0;i < sangchu.length; i++){
+						%>
+							<option value="<%=sangchu[i].g_id%>" class="seed1"><%=sangchu[i].printname%></option>
+						<%
+							}
+						%>
+					</select>
+					<button type="button" onclick="saveSeed(1)" class="btn">키우기</button>
+				</div>
+					
+				<div class="online_garden_choice1">
+					<select name="seed" class="seed reap">
+						<option value="0" class="seed1">잎채소류</option>
+						<%
+							for(var i=0;i < reap.length; i++){
+						%>
+							<option value="<%=reap[i].g_id%>" class="seed1"><%=reap[i].printname%></option>
+						<%
+							}
+						%>
+					</select>
+					<button type="button" onclick="saveSeed(2)" class="btn">키우기</button>
+				</div>
+					
+				<div class="online_garden_choice1">
+					<select name="seed" class="seed baechu">
+						<option value="0" class="seed1">배추류</option>
+						<%
+							for(var i=0;i < baechu.length; i++){
+						%>
+							<option value="<%=baechu[i].g_id%>" class="seed1"><%=baechu[i].printname%></option>
+						<%
+							}
+						%>
+					</select>
+					<button type="button" onclick="saveSeed(3)" class="btn">키우기</button>
+				</div>
+					
+				<div class="online_garden_choice">
+					<select name="seed" class="seed bburi">
+						<option value="0" class="seed1">뿌리 채소류</option>
+						<%
+							for(var i=0;i < bburi.length; i++){
+						%>
+							<option value="<%=bburi[i].g_id%>" class="seed1"><%=bburi[i].printname%></option>
+						<%
+							}
+						%>
+					</select>
+					<button type="button" onclick="saveSeed(4)" class="btn">키우기</button>
+				</div>
+				<div class="online_garden_choice1">
+					<select name="seed" class="seed fruit">
+						<option value="0" class="seed1">열매류</option>
+						<%
+							for(var i=0;i < fruit.length; i++){
+						%>
+							<option value="<%=fruit[i].g_id%>" class="seed1"><%=fruit[i].printname%></option>
+						<%
+							}
+						%>
+					</select>
+					<button type="button" onclick="saveSeed(5)" class="btn">키우기</button>
+				</div>
+					
+				<div class="online_garden_choice1">
+					<select name="seed" class="seed hurb">
+						<option value="0" class="seed1">허브류</option>
+						<%
+							for(var i=0;i < hurb.length; i++){
+						%>
+							<option value="<%=hurb[i].g_id%>" class="seed1"><%=hurb[i].printname%></option>
+						<%
+							}
+						%>
+					</select>
+					<button type="button" onclick="saveSeed(6)" class="btn">키우기</button>
+				</div>
+				
+				</div>
+				<div class="online_garden_name1">
+					내 텃밭
+				</div>
+				<div class="online_garden_choice2">
+					<p class="seed_title">내 씨앗</p>
+					<input type="hidden" value="<%=session.u_id%>" id="sessionId">
+					<select name="my_seed" class="my_seed" onchange="changeMySeed()">
+						<option class="seed1">선택하세요</option>
+						<%
+							for(var i=0;i < farms.length;i++){
+								
+						%>
+							<option value="<%=farms[i].f_id%>" class="seed1"><%=farms[i].printname%></option>
+						<%
+							}
+						%>
+					</select>
+				</div>
+				<div class="tip">
+				</div>
+				<div id="graph">
+					<div class="allstick">
+						<span>다음 팁까지 진행도 : </span><progress value="0" max="100" class="stick"></progress>
+						<input type="hidden" class="stick_max" value=""><input type="hidden" class="stick_water" value="">
+					</div>
+				</div>
+				<div class="online_garden_button_box">
+				<div class="online_garden_button">
+					
+					<div class="online_garden_button_img">
+						
+						<div style="position:absolute; visibility:hidden; overflow-y:hidden;">
+							<img src="images/online_garden_img6.PNG" 
+								 style="position: relative; overflow-y:hidden; width: 120px;" id="sprayer">
+						</div>
+						<div style="position:absolute;  overflow-y:hidden;">
+							<img src="images/online_garden_img7.PNG" 
+								 style="position: relative; visibility:hidden; overflow-y:hidden;
+								 margin-left:350px;margin-top: 140px; width: 100px;" id="water">
+						</div>
+						<div id="plantBox" style="position:absolute; overflow-y:hidden;">
+						</div>
+						
+						<div style="position:absolute; display: none;" id="glass1">
+							<img src="/images/glass1.PNG" style="position: relative; width: 70px; margin-top:280px;">
+							<img src="/images/glass1.PNG" style="position: relative; width: 70px; margin-left: 160px;">
+							<img src="/images/glass1.PNG" style="position: relative; width: 70px; margin-left: 160px;">
+							<img src="/images/glass1.PNG" style="position: relative; width: 70px; margin-left: 140px;">
+						</div>
+						<div style="position:absolute; display: none;" id="glass2">
+							<img src="/images/glass1.PNG" style="position: relative; width: 70px; margin-top:300px; margin-left: 30px;">
+							<img src="/images/glass1.PNG" style="position: relative; width: 70px; margin-left: 180px;">
+							<img src="/images/glass1.PNG" style="position: relative; width: 70px; margin-left: 150px;">
+							<img src="/images/glass1.PNG" style="position: relative; width: 70px; margin-left: 150px;">
+						</div>
+						<div style="position:absolute; display: none;" id="bug1">
+							<img src="/images/bug1.PNG" style="position: relative; width: 70px; margin-top: 400px; margin-left: 80px;">
+							<img src="/images/bug1.PNG" style="position: relative; width: 70px;margin-left: 250px;">
+							<img src="/images/bug1.PNG" style="position: relative; width: 70px;margin-left: 250px;">
+						</div>
+						<div style="position:absolute; display: none;" id="bug2">
+							<img src="/images/bug2.PNG" style="position: relative; width: 70px; margin-top: 350px; margin-left: 180px;">
+							<img src="/images/bug2.PNG" style="position: relative; width: 70px;margin-left: 260px;">
+						</div>
+						<!--
+						-->
+					</div>
+					
+						
+					<div class="seed_diary_title">
+						<p class="seed_diary_name">씨앗 일기</p>
+						<div class="seed_diary">
+							<span class="seed_diary_text">씨앗 종류 :</span> 
+							<span class="seed_diary_text1 farms_name"></span> <br>
+												
+							<span class="seed_diary_text">물준 횟수 :</span> 
+							<span class="seed_diary_text1">(<span class="seed_diary_text1 water"></span>/<span class="seed_diary_text1 maxWater"></span><input type="hidden" class="max_water">)</span> <br>
+												
+							<span class="seed_diary_text">거름 여부 :</span> 
+							<span class="seed_diary_text1 farms_manure"></span><input type="hidden" class="manure" value=""> <br>
+												
+							<span class="seed_diary_text">잡초 여부 :</span> 
+							<span class="seed_diary_text1 farms_remove"></span><input type="hidden" class="remove" value=""> <br>
+												
+							<span class="seed_diary_text2">병충해 여부 :</span> 
+							<span class="seed_diary_text1 farms_pesticide"></span><input type="hidden" class="pesticide" value=""> <br>
+						</div>
+					
+						<div class="garden_button">
+							<button type="button" onclick="watering()" class="btn_water">씨앗에 물주기 </button>
+							<button type="button" onclick="manure()" class="btn_water">씨앗에 거름주기 </button>
+							<button type="button" onclick="remove()" class="btn_water">잡초제거</button>
+							<button type="button" onclick="pesticide()" class="btn_water">병충해 제거</button>
+						</div>
+					
+				
+					</div>
+				</div>
+				</div>
+				
+				
+				
+				
+			</div>
+		</div>
+		
+		<div id="line"></div>
+			
+		<!--푸터-------------->
+           <div id="footer">
+<div class="footer_inner">
+  <div class="copyright"> 
+	  <img src="/images/footer_logo.png" width="250" style="float:left; padding-left: 10px; padding-top:26px; margin-bottom: 38px;"><br><br>
+	  <dt>SHOP NAME : kichen garden &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;OWNER : 강정우</dt>
+	  <dt>Fax. 02-2222-2222   &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;TEL: 02-2222-2222</dt>
+	  <dt>사업자등록번호 : 2222-22-222222 </dt> 
+	  <dt>소재지: 충청남도 천안시 서북구 성환읍 남서울대학교 </dt> 
+  </div> 
+	
+	
+	
+		<div class="copyright1">
+			<dd><i class="fas fa-phone-alt"></i>&ensp;02-2222-2222</dd>
+	  		<dt>MON - FRI : PM 1:00 ~ PM 6:00</dt>
+	  		<dt>(SAT,SUN,HOLIDAY CLOSED)</dt>
+			<br><br><br>
+			<dt class="last">Copyright (c) kichen garden All Rights Reserved</dt> 
+  		</div>
+	
+	<div class="copyright2">
+		<dd class="follow">follow</dd>
+		<a href="#"><i class="fab fa-facebook-f"></i></a>
+		<a href="#"><i class="fab fa-instagram"></i></a>
+		<a href="#"> <i class="fab fa-twitter"></i></a>
+	  
+		 
+
+  </div>
+  
+</div>
+				</div><!-- end container -->
+
+<!-- 제이쿼리,스크립트 -->
+
+    </body>
+</html>

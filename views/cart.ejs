@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<title>kichen garden</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/mypage.css">
+        <link rel="stylesheet" href="/css/garden_info.css">
+		 <link rel="stylesheet" href="/css/jquery.flipster.min.css">
+		 <script src="/js/jquery-3.1.1.min.js"></script>
+        <script src="/js/jquery.flipster.min.js"></script>
+        <script>
+			function delCart(c_id){
+				console.log(c_id);
+				$.ajax({
+						url:'/deleteCart',
+						type:'POST',
+						data:{"c_id":c_id},
+						dataType:'json',
+						success:function(result){
+							alert("삭제되었습니다!");
+							$('.cart_list').empty();
+							console.log(result.carts);
+							var tr=$(
+									"<tr>"+
+										"<th class='list_th' style='width:60%;'>상품 정보</th>"+
+										"<th class='list_th'  style='width:17%;'>상품 개수</th>"+
+										"<th class='list_th'  style='width:17%;'>상품 가격</th>"+
+										"<th class='list_th'  style='width:6%;'>취소</th>"+
+									"</tr>"
+									);
+							$('.cart_list').append(tr);
+							
+							if(!result.carts.length){
+								
+								var div=$(
+									"<tr>"+
+										"<td style='text-align: right;'>장바구니가 비었습니다!</td>"+
+									"</tr>"
+								);
+								
+								$('.cart_list').append(div);
+								
+							}else{
+								
+								for(var i=0; i < result.carts.length; i++){
+									var price=result.carts[i].price*result.carts[i].quantity;
+
+									var div=$(
+										"<tr>"+
+											"<td class='list_td' style='text-align: left;'>"+
+												"<img src='/images/store_sum_img_"+result.carts[i].g_id+".png' style='width: 150px; height: 150px; vertical-align: middle;'>"+
+												"<span style='margin-left: 20px;'>"+result.carts[i].name+"</span>"+
+											"</td>"+
+											"<td class='list_td'>"+result.carts[i].quantity+"</td>"+
+											"<td class='list_td'>"+price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"</td>"+
+											"<td class='list_td' onclick='delCart("+result.carts[i].c_id+")'>X</td>"+
+										"</tr>"
+									);
+									
+							console.log("8");
+									$('.cart_list').append(div);
+								}
+							}
+						}
+					});
+			}
+
+		</script>
+		
+		<!-- 
+			반응형 했던거
+        <link rel="stylesheet" href="css/tablet.css" media="all and (min-width:900px) and (max-width:1242px)">
+		<link rel="stylesheet" href="css/mobile.css" media="all and (min-width:320px) and (max-width:899px)">
+		-->
+		<script src="https://kit.fontawesome.com/d0c252d761.js" crossorigin="anonymous"></script><!--아이콘 링크 -->
+    </head>
+    <body>
+		
+        <header id="main-header">
+			<!--
+			
+			반응형 모바일 햄버거 눌렀을떄 메뉴
+			<nav id="mobile">
+				<div class="mobile_top">
+				<li>
+					<a href="#">로그인</a>
+				</li>
+					<li>
+						/
+					</li>
+				<li>
+					<a href="#">회원가입</a>
+				</li>
+					
+				<li class="button2"><a href="">
+<img src="Images/cart.png" width="23" height="23"></a></li>
+					<br>
+<li class="button1">
+	<i class="xi-search"></i>
+<input type="text" placeholder="Search.." name="search">
+					</li>
+				</div>
+			<ul>
+				<li> 
+					<a href="">텃밭세트 </a>
+				</li>
+				<li>
+					<a href="">씨앗</a>
+				</li>
+				<li>
+					<a href="">모종</a>
+				</li>
+				<li>
+					<a href="">흙</a>
+				</li>
+				<li>
+					<a href="">화분</a> 
+				</li>
+				<li>
+					<a href="">원예도구</a> 
+				</li>
+			</ul>
+		</nav>
+		<a class="tab" href=""><span>tab</span></a>
+	<div class="dim"></div>
+-->
+          
+			<nav class="header_inner">
+				<div class="header_menu">
+					<!--헤더 메뉴-->
+					<div class="logo">
+						<a href="/">
+							<img src="/images/logo.png" width="300" >
+						</a>
+					</div>
+					<!--
+							반응형 로고
+					<div class="logo_mobile">
+						<img src="images/mobile_logo.png" width="150" >
+					</div>
+					
+					<!----검색버튼 누른후 회색 화면 -->		
+					<div id="myOverlay" class="overlay">
+						<div class="overlay-content">
+							<form action="/search" method="post">
+								<p class="closebtn" onclick="closeSearch()" title="Close Overlay">X</p>
+								<input type="text" placeholder="Search.." name="search">
+								<button type="submit"><i class="fas fa-search"></i></button>
+							</form>
+						</div>
+						
+					</div>	
+				<!----검색버튼 누른후 회색 화면 닫기-->		   
+							
+								
+							
+			<!-- 로그인 -->
+					<ul class="head_btn">
+						<%
+							if(session){
+						%>
+							<li><a href="/mypage"><span>마이페이지</span></a></li>
+							<li><a href="/logout"><span>로그아웃</span></a></li>
+							<li><%=session.name%>님, 어서오세요</li>
+							<li><a href="/cart">
+								<span><i class="fas fa-shopping-cart"></i></span></a></li>
+							<li class="button">
+								<button class="openBtn" onclick="openSearch()">
+									<i class="fas fa-search"></i>
+								</button>
+							</li>
+						<%
+							}else{
+						%>
+							<li><a href="/join"><span>회원가입</span></a></li>
+							<li><a href="/login"><span>로그인</span></a></li>
+							<li class="button">
+								<button class="openBtn" onclick="openSearch()">
+									<i class="fas fa-search"></i>
+								</button>
+							</li>
+						<%
+							}
+						%>
+
+					</ul>
+					<!-- 로그인 닫기-->
+
+					<!-- 서브메뉴 -->
+					<ul class="head_sub">
+
+						<li>
+							<a href="/store">
+								<span>STORE</span>
+							</a>
+						</li>
+						<li>
+							<a href="/recipe">
+								<span>베란다 레시피</span>
+							</a>
+						</li>
+						<li>
+							<a href="/garden">
+								<span>텃밭정보</span>
+							</a>
+						</li>
+						<li>
+							<a href="/calender">
+								<span>파종달력</span>
+							</a>
+						</li>
+						<li>
+							<a href="/farm">
+								<span>온라인 텃밭</span>
+							</a>
+						</li>
+					</ul><!-- 서브메뉴 닫기-->
+				</div><!--헤드인-->
+	<!--헤더 메뉴닫기-->
+	<!--헤더닫기-->
+			</nav>
+		</header>
+        
+        
+        <div id="main"> 
+		</div>
+			
+				
+				<div id="mypage">
+					<div class="mypage_1">
+						<div class="mypage_2">
+							<i class="fas fa-user"></i>
+							<span class="mypage_name"><%=user.name%></span>
+							<span class="name_1">님 </span> <br>
+							
+							<span class="name_2">1% 적립</span> 
+							
+								</div>
+						<div class="mypage_3">
+							<i class="fas fa-coins"></i>
+							<span class="point"> 적립금</span><br>
+							
+							<a href="#">
+							<span class="point_1"><%=user.point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%>원</span> 
+							<i class="fas fa-chevron-right"></i>
+							</a>
+						</div>
+						
+						<div class="mypage_3">
+							<i class="fas fa-shopping-cart"></i>
+							<span class="point"> 장바구니</span><br>
+							
+							<a href="#">
+							<span class="point_1"><%=count%>개</span> 
+							<i class="fas fa-chevron-right"></i>
+							</a>
+						</div>
+						
+						<div class="mypage_3">
+						    <i class="fas fa-seedling"></i>
+							<span class="point"> 내 텃밭</span><br>
+							
+							<a href="#">
+							<span class="point_2">물주러 가기</span> 
+								
+								<span class="arrow"><i class="fas fa-chevron-right"></i></span>
+							</a>
+						</div>
+				
+					</div>
+					
+					
+				</div>
+		
+		
+		
+		<div id="mygarden">
+			<div class="mygarden_name">
+				<h2 class="tit_name">마이가든</h2>
+				<div class="inner_snb">
+				
+					<ul class="list_menu">
+				<li>
+				<a href="/mypage">주문 내역</a> 
+				</li>
+				<li>
+				<a href="/cart">장바구니</a> 
+				</li>
+				<li>
+				<a href="/point">적립금</a>
+				</li>
+				<li>
+				<a href="/update">개인 정보 수정</a>
+				</li>
+				</ul>
+				
+				</div>
+			</div>
+			
+			<div class="mygarden_sub_name">
+				<h1 class="tit_name1">장바구니</h1>
+			</div>
+			<ul class="list_order"> 
+				<form action="/order" method="get">
+			
+                    <table class="cart_list">
+                        <tr>
+                            <th class="list_th" style="width:60%;">상품 정보</th>
+                            <th class="list_th"  style="width:17%;">상품 개수</th>
+                            <th class="list_th"  style="width:17%;">상품 가격</th>
+                            <th class="list_th"  style="width:6%;">취소</th>
+						</tr>
+						<%
+							if(!carts.length){
+						%>
+							<tr>
+								<td style="text-align: right;">장바구니가 비었습니다!</td>
+							</tr>
+						<%
+							}else{
+								for(var i=0; i < carts.length; i++){
+						%>
+							<tr>
+								<td class="list_td" style="text-align: left;">
+									<input type="hidden" name="c_id" value="<%=carts[i].c_id%>">
+									<img src="/images/store_sum_img_<%=carts[i].g_id%>.png" style="width: 150px; height: 150px; vertical-align: middle;">
+									<span style="margin-left: 20px;"><%=carts[i].name%></span>
+									<input type="hidden" name="g_id" value="<%=carts[i].g_id%>">
+								</td>
+								<td class="list_td"><%=carts[i].quantity%><input type="hidden" name="quantity" value="<%=carts[i].quantity%>"></td>
+								<td class="list_td"><%=(carts[i].price*carts[i].quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%></td>
+								<td class="list_td" onclick="delCart('<%=carts[i].c_id%>')">X</td>
+							</tr>
+						<%
+								}
+							}
+						%>
+					</table>
+					<%
+						if(carts.length){
+					%>
+						<input type="submit" class="enter" value="상품 주문하기">
+					<%
+						}
+					%>
+                    
+                </form>
+			</ul>
+		</div>
+			
+  <!--메인배너 닫기-->
+
+
+<div id="line"></div>
+			
+		<!--푸터-------------->
+             <div id="footer">
+<div class="footer_inner">
+  <div class="copyright"> 
+	  <img src="/images/footer_logo.png" width="250" style="float:left; padding-left: 10px; padding-top:26px; margin-bottom: 38px;"><br><br>
+	  <dt>SHOP NAME : kichen garden &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;OWNER : 강정우</dt>
+	  <dt>Fax. 02-2222-2222   &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;TEL: 02-2222-2222</dt>
+	  <dt>사업자등록번호 : 2222-22-222222 </dt> 
+	  <dt>소재지: 충청남도 천안시 서북구 성환읍 남서울대학교 </dt> 
+  </div> 
+	
+	
+	
+	  <div class="copyright1">
+		  <dd><i class="fas fa-phone-alt"></i>&ensp;02-2222-2222</dd>
+	  <dt>MON - FRI : PM 1:00 ~ PM 6:00</dt>
+	  <dt>(SAT,SUN,HOLIDAY CLOSED)</dt>
+		  <br><br><br>
+	  <dt class="last">Copyright (c) kichen garden All Rights Reserved</dt> 
+  </div>
+	
+	<div class="copyright2">
+		<dd class="follow">follow</dd>
+		<a href="#"><i class="fab fa-facebook-f"></i></a>
+		<a href="#"><i class="fab fa-instagram"></i></a>
+		<a href="#"> <i class="fab fa-twitter"></i></a>
+	  
+		 
+
+  </div>
+  
+</div>
+				</div>
+			
+<!--푸터-------------->
+        </div> <!-- end container -->
+
+<!-- 제이쿼리,스크립트 -->
+       <script src="/js/scripts.js"></script>
+
+    </body>
+</html>

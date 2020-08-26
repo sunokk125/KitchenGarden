@@ -1,0 +1,643 @@
+/************************************************/
+/* General */
+/************************************************/
+* {
+    -webkit-font-smoothing: antialiased;
+   box-sizing: border-box;
+   margin:0;
+   padding:0;
+   list-style:none;
+	overflow-x:hidden;
+       
+}
+a{ 
+text-decoration:none;
+color:#000000;
+}
+img{
+	overflow: hidden;
+}
+
+
+
+/************************************************/
+/* Header */
+/************************************************/
+header {
+    position:fixed;
+    top: 0;
+    background:#FFF;
+    width:100%;
+    height:152px;
+	z-index:9000; 
+	transition:.2s ease-in-out;
+	overflow-y:hidden;
+	 font-family:"tvN 즐거운이야기 Bold", "tvN 즐거운이야기 Light", "tvN 즐거운이야기 Medium";
+}
+/*****헤더 제이쿼리 ***/
+header.shrink{
+	height:5.3em;
+	border-bottom: 1px solid rgb(68,112,77);
+	background: rgba(255,255,255,1); 
+	transition:.5s ease-in-out;
+}
+header.shrink .head_btn{
+	display: none;	
+}
+header.shrink .head_sub{
+	 padding-top:30px;
+}
+/*************************/
+.header_inner{
+	 width:1150px;
+     margin: 0 auto;
+     overflow-style: none; 
+     padding:0px 10px;
+}
+.logo {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.logo_mobile {
+	display: none;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+/**********************************/
+.header_menu{
+    width:1150px;
+   margin:0 auto;
+}
+.head_btn{
+
+    width:1150px;
+   list-style: none;
+   float:right;
+   position:relative;
+   padding-top:32px;
+   font-weight:600;
+}
+.head_btn li{   
+   float:right;
+   padding-left:20px;  
+	padding-right:8px;
+   font-size:24px;
+}
+
+.head_btn .button1{
+  padding-right:16px; 
+}
+
+.head_sub{
+   float:left;
+   list-style:none;
+    width:1150px;
+   padding-top:50px;
+  font-weight: bold;
+}
+.head_sub li{
+   float:right;   
+   padding-left:50px; 
+   position:relative;
+   font-size:30px;
+   padding-right:8px;
+}
+.fa-search{
+	font-size:15px;
+}
+
+.fa-shopping-cart{
+	font-size:15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/**검색************************************/
+.openBtn {
+    cursor: pointer;
+    border: none;
+	background-color: #fff;
+}
+.overlay {
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.3);
+  overflow: hidden;/* Black with a little bit see-through */
+}
+
+/* The content */
+.overlay-content {
+  display: block;
+  position: relative;
+  top: 40%;
+  width: 400px;
+  margin:0 auto;
+}
+
+/* Close button */
+.overlay-content .closebtn {
+	width: 60px;
+	height: 60px;
+	text-align: center;
+  position:fixed;
+  margin-left:390px;
+  bottom:529px;
+  font-size:50px;
+  cursor: pointer;
+  color: white;
+  z-index: 999;
+ 
+}
+
+.overlay .closebtn:hover {
+  color: #ccc;
+}
+
+/* Style the search field */
+.overlay input[type=text] {
+  padding: 15px;
+  font-size: 17px;
+  border: none;
+  float: left;
+  width: 80%;
+  background: white;
+}
+
+.overlay input[type=text]:hover {
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+.overlay button {
+  float: left;
+  width: 20%;
+  padding: 15px;
+  background: #87A38D;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.overlay button:hover {
+  background: #bbb;
+}
+
+
+
+
+
+
+
+
+
+/************************온라인 텃밭**********************/	
+
+#main{
+	width:100%;
+	padding-top:146px;	
+	overflow-y:hidden;
+}
+#mypage{
+	width:1920px;
+	height: 334px;
+	background-color: #F7F7F7;	
+}
+.mypage_1{
+	margin: 0 auto;
+	width: 1150px;
+	height: 191px;
+	background-color: #fff;
+	margin-top: 75px;
+}
+.fa-user{
+	position: relative;
+	font-size: 50px;
+	color:#949296;
+	top:19px;
+	left:48px;
+	color:#44704D;
+}
+.name{
+	position: relative;
+	font-family: "tvN 즐거운이야기 Bold", "tvN 즐거운이야기 Light", "tvN 즐거운이야기 Medium";
+	font-size: 50px;
+	font-weight: bold;
+	top:10px;
+}
+
+.name a:hover{
+	text-decoration: underline;
+}
+
+.mypage_name{
+	position: relative;
+	font-family: "tvN 즐거운이야기 Bold", "tvN 즐거운이야기 Light", "tvN 즐거운이야기 Medium";
+	font-size: 50px;
+	font-weight: bold;
+	top:10px;
+	margin-left: 60px;
+}
+.name_1{
+	position: relative;
+	font-family: "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	font-size:20px;
+	left:50px;
+	top:10px;
+}
+.name_2{
+	position: relative;
+	left: 110px;
+	top:30px;
+	font-size: 15px;
+	font-weight: bold;
+}
+.mypage_2{
+	width: 436px;
+	height: 191px;
+	border-right: 5px solid #F7F7F7;
+	float: left;
+}
+.fa-coins{
+	position: relative;
+	font-size:40px;
+	color:#949296;
+	top:25px;
+	left:20px;
+	color:#44704D;
+}
+.point{
+	position: relative;
+	font-family: "tvN 즐거운이야기 Bold", "tvN 즐거운이야기 Light", "tvN 즐거운이야기 Medium";
+	font-size: 40px;
+	font-weight: bold;
+	top:20px;
+	left:30px;
+}
+.point_1{
+	position: relative;
+	left: 80px;
+	top:40px;
+	font-size: 20px;
+	font-weight: bold;
+	color:#44704D;
+}
+.point_2{
+	position: relative;
+	left: 60px;
+	top:40px;
+	font-size: 20px;
+	font-weight: bold;
+	color:#44704D;
+}
+.fa-chevron-right{
+	position: relative;
+	left: 80px;
+	top:40px;
+	font-size: 15px;
+	font-weight: bold;
+	color:#B6B6B6;
+	
+}
+.arrow .fa-chevron-right{
+	position: relative;
+	left:60px;
+	top:40px;
+	font-size: 15px;
+	font-weight: bold;
+	color:#B6B6B6;
+}
+.mypage_3 .fa-shopping-cart{
+	position: relative;
+	font-size:40px;
+	color:#949296;
+	top:25px;
+	left:20px;
+	color:#44704D;
+}
+.fa-seedling{
+	position: relative;
+	font-size:40px;
+	color:#949296;
+	top:25px;
+	left:20px;
+	color:#44704D;
+}
+.mypage_3{
+	width:238px;
+	height: 191px;
+	border-right: 5px solid #F7F7F7;
+	float: left;
+}
+
+
+#mygarden{
+	width: 1150px;
+	margin: 0 auto;
+	margin-top: 85px;
+}
+.mygarden_name{
+	float: left;
+	width: 200px;
+}
+.tit_name{
+	padding: 0 0 30px 2px;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 41px;
+    color: #4a4a4a;
+}
+.inner_snb{
+	border: 1px solid #dcdbde;
+    border-bottom: 0
+}
+.list_menu li{
+	border-bottom: 1px solid #dcdbde;
+}
+.list_menu li a{
+     display: block;
+    overflow: hidden;
+    padding: 16px 0 16px 19px;
+    background-size: 6px 10px;
+    font-size: 15px;
+    color: #666;
+    line-height: 18px;
+}
+.list_menu li a:hover{
+    background-color: #f7f7f7;
+	color:#44704D;
+}
+.mygarden_sub_name{
+	position: relative;
+	left:59px;
+	top:5px;
+	width: 893px;
+	height: 71px;
+	border-bottom: 5px solid #44704D;
+}
+.tit_name1{
+	height: 42px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    color: #333;
+}
+.list_order{
+	position: relative;
+	left:59px;
+	width: 890px;
+	padding-top:10px;
+}
+.list_order li{
+	padding: 25px 0px 25px 25px; 
+    font-size: 13px;
+    color: #757575;
+    text-align: center;
+	border-bottom: 1px solid #dddfe1;
+	
+}
+.cart_list{
+	width: 100%;
+}
+.list_th{
+	padding: 10px 0;
+}
+.list_td{
+	text-align: center;
+}
+
+.enter{
+	position: relative;
+	font-family:  'Noto Sans KR Regular', 'Noto Sans KR Thin';
+	float: right;
+    height: 40px;
+	width: 150px;
+	margin-right: 15px;
+    border: 1px solid #44704D;
+    border-radius: 3px;
+    background-color:#44704D;
+    font-size: 15px;
+    color: #fff;
+    line-height: 34px;
+	cursor: pointer;
+}
+.tbl_type1 .info {
+	padding-left:30px;
+	width: 400px;
+	text-align: left;
+  
+}
+.tbl_type1 .progress {
+    padding-right: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    color: rgb(68,112,77);
+    line-height: 20px;
+    letter-spacing: -.3px;
+    text-align: center;
+	width: 160px;
+	
+}
+.tbl_type1 .name {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 700;
+    color: #000;
+	font-family: "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	overflow: hidden;
+}
+.tbl_type1 .price {
+    font-size: 14px;
+    line-height: 60px;
+    font-weight: 700;
+    color: #000;
+	font-family: "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+
+}
+.tbl_type1 .ea {
+    padding-left: 4px;
+    font-size: 12px;
+    color: #666;
+    line-height: 18px;
+	font-family: "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+}
+.tbl_type1 .btn_cart {
+    border: 1px solid rgb(68,112,77);
+    background: 0 0;
+    text-indent: 0;
+}
+.tbl_type1 .btn {
+    display: block;
+    width: 100px;
+    height: 34px;
+    margin-top: 10px;
+    background-color: #fff;
+    font-size: 12px;
+    color: rgb(68,112,77);
+    line-height: 32px;
+    text-align: center;
+    letter-spacing: -.3px;
+	cursor: pointer;
+	outline:none;
+}
+.head_section {
+    padding: 43px 0 14px;
+	
+}/**/
+.head_section1 {
+    padding: 43px 0 14px;
+	
+}/**/
+.head_section .tit {
+    font-size: 20px;
+    color: #333;
+}
+.tbl_type2 {
+    border-bottom: 1px solid #dddfe1;
+	border-top: 2px solid #44704D;
+	width: 890px;
+}/**/
+.tbl_type2 tr:first-child th,.tbl_type2 tr:first-child td {
+    padding-top: 20px;
+}
+.tbl_type2 th {
+    padding: 0 0 20px 10px;
+    font-size: 16px;
+    color: #000;
+    line-height: 20px;
+    text-align: left;
+    vertical-align: top;
+}
+.tbl_type2 td {
+    font-size: 15px;
+    color: #4c4c4c;
+    line-height: 20px;
+    vertical-align: top;
+}
+#order_detail{
+	display: none;
+	text-align: left;
+}/**/
+#line{
+	position: relative;
+	width: 100%;
+	border-top:1px solid #f7f7f7;
+	margin-top:70px;
+}
+
+
+/***푸ㅡ터*******************************/
+#footer{
+	position: relative;
+	width:100%;
+}
+.footer_inner{
+	position: relative;
+	margin: 0 auto;
+	 width:1150px;
+	height: 215px;
+	margin-bottom:50px;
+	display:block;
+	overflow-y:hidden;
+}
+.copyright {
+	width:450px;
+	float:left;
+	text-align: left;
+	overflow: hidden;
+	box-sizing: border-box;	
+}
+.copyright1 {
+	width:420px;
+	float:left;
+	text-align: left;
+	overflow: hidden;
+	box-sizing: border-box;
+	margin-left: 100px;
+	height: 210px;
+}
+.copyright2 {
+	width:140px;
+	float:left;
+	text-align: left;
+	overflow: hidden;
+	box-sizing: border-box;
+	margin-left:20px;
+	height:140px;
+}
+.footer_image{
+	height:50px;
+	float:right;
+	margin-right:200px;
+	margin-top:80px;
+}
+.follow{
+	text-align: center;
+	font-size:35px;
+	padding-top:17px;
+}
+dt{
+	font-family:  'Noto Sans KR Regular', 'Noto Sans KR Thin';
+	margin-left: 10px;
+	float: left;
+	padding-top:5px;
+	font-size:15px;
+	color: #707070;
+}
+.last{
+	padding-top:16px;
+}
+.xi-call-incoming{
+	font-size:35 px;	
+}
+dd{
+	font-family:  'Noto Sans KR Regular', 'Noto Sans KR Thin';
+	font-size:35px;
+	padding-top:17px;
+	margin-bottom:29px;
+	color:#707070
+}
+.fa-phone-alt{
+	position: relative;
+	top:5px;
+	left:10px;
+	font-size: 30px;
+	color:#707070
+}
+.fa-facebook-f{
+	font-size: 25px;
+	padding-left: 9px;
+	color:#707070
+	
+}
+.fa-instagram{
+	font-size: 25px;
+	padding-left: 20px;
+	color:#707070
+}
+.fa-twitter{
+	font-size: 25px;
+	padding-left: 20px;
+	color:#707070
+}
+
+/************************************************/
+/* 모바일 햄버거*/
+/************************************************/
+

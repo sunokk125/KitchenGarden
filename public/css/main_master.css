@@ -1,0 +1,916 @@
+
+/************************************************/
+/* General */
+/************************************************/
+* {
+    -webkit-font-smoothing: antialiased;
+   box-sizing: border-box;
+   margin:0;
+   padding:0;
+   list-style:none;
+   font-family:"tvN 즐거운이야기 Bold", "tvN 즐거운이야기 Light", "tvN 즐거운이야기 Medium","Noto Sans KR Bold", "Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+       
+}
+a{ 
+text-decoration:none;
+color:#000000;
+}
+img{
+	overflow: hidden;
+}
+
+
+
+/************************************************/
+/* Header */
+/************************************************/
+header {
+    position:fixed;
+    top: 0;
+    background:#FFF;
+    width:100%;
+    height:152px;
+	z-index:9000; 
+	transition:.2s ease-in-out;
+	overflow-y:hidden;
+	overflow-x:hidden;
+		background-color: #FFDD6B;
+	
+}
+/*****헤더 제이쿼리 ***/
+header.shrink{
+	height:5.3em;
+	background: rgba(255,255,255,1); 
+	transition:.5s ease-in-out;
+	background-color: #FFDD6B;
+}
+header.shrink .head_btn{
+	display: none;	
+}
+header.shrink .head_sub{
+	 padding-top:30px;
+}
+
+/*************************/
+.header_inner{
+	 width:1150px;
+     margin: 0 auto;
+     overflow-style: none; 
+     padding:0px 10px;
+}
+.logo {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.logo_mobile {
+	display: none;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+/**********************************/
+.header_menu{
+  width:1150px;
+   margin:0 auto;
+}
+.head_btn{
+
+   width:1150px;
+   list-style: none;
+   float:right;
+   position:relative;
+   padding-top:32px;
+   font-weight:600;
+}
+.head_btn li{   
+   float:right;
+   padding-left:20px;  
+	padding-right:8px;
+   font-size:24px;
+}
+
+.head_btn .button1{
+  padding-right:16px; 
+}
+
+.head_sub{
+   float:left;
+   list-style:none;
+  width:1150px;
+   padding-top:50px;
+  font-weight: bold;
+}
+.head_sub li{
+   float:right;   
+   padding-left:50px; 
+   position:relative;
+   font-size:30px;
+   padding-right:8px;
+}
+.fa-search{
+	font-size:15px;
+}
+.fa-shopping-cart{
+	font-size:15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/**검색************************************/
+.openBtn {
+    cursor: pointer;
+    border: none;
+	background-color: #FFDD6B;
+}
+.overlay {
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.3);
+  overflow: hidden;/* Black with a little bit see-through */
+}
+
+/* The content */
+.overlay-content {
+  display: block;
+  position: relative;
+  top: 40%;
+  width: 400px;
+  margin:0 auto;
+}
+
+/* Close button */
+.overlay-content .closebtn {
+	width: 60px;
+	height: 60px;
+	text-align: center;
+  position:fixed;
+  margin-left:390px;
+  bottom:529px;
+  font-size:50px;
+  cursor: pointer;
+  color: white;
+  z-index: 999;
+ 
+}
+
+.overlay .closebtn:hover {
+  color: #ccc;
+}
+
+/* Style the search field */
+.overlay input[type=text] {
+  padding: 15px;
+  font-size: 17px;
+  border: none;
+  float: left;
+  width: 80%;
+  background: white;
+}
+
+.overlay input[type=text]:hover {
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+.overlay button {
+  float: left;
+  width: 20%;
+  padding: 15px;
+  background: #87A38D;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.overlay button:hover {
+  background: #bbb;
+}
+
+
+
+
+
+
+
+
+
+
+/************************온라인 텃밭**********************/	
+
+#main{
+	width:100%;
+	padding-top:146px;	
+	overflow-x: hidden;
+}
+#image{	
+	overflow-x: hidden;
+   width:100%;
+   margin: 0 auto;
+   height:747px;
+   background-color: #FFF;
+   background-image: url(../images/back.png);
+	background-repeat: no-repeat;
+}
+.online_graden{
+	font-family: "Noto Sans KR Black", "Noto Sans KR Bold", "Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	position: relative;
+	margin-left:391px;
+	margin-top:204px;
+}
+.online_graden_name{
+	font-family: "Noto Sans KR Black", "Noto Sans KR Bold", "Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	font-size: 40px;
+	font-weight: bolder;
+	color:#4A4A4A;
+}
+.box_name{
+	font-family: "Noto Sans KR Black", "Noto Sans KR Bold", "Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	font-size: 60px;
+	font-weight: bolder;
+	color:#44704D;
+}
+.online_graden_text{
+	font-family: "Noto Sans KR Black", "Noto Sans KR Bold", "Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	margin-top:50px;
+	color:#D13531;
+	font-size: 20px;
+	font-weight: bold;
+	line-height:60px;
+	color:#4A4A4A;
+}
+
+
+
+
+
+/************************ 텃밭정보*******************************************************/	
+#calendar{
+	width: 1150px;
+	margin: 0 auto;
+	height: 500px;
+	margin-top: 70px;
+	margin-bottom: 100px;
+}
+.calendar_go{
+	font-family: "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	font-size: 20px;
+	text-align: center;
+	margin-top: 10px;
+	margin-right: 25px;
+ }
+
+
+/**********************파종달력****************************************/	
+.parallox_name{
+	font-family: "tvN 즐거운이야기 Bold", "tvN 즐거운이야기 Light", "tvN 즐거운이야기 Medium";
+	font-size: 60px;
+	font-weight: bold;
+	color:#000000;
+	position: relative;
+	top:52px;
+	left:740px;
+}
+.calendar{
+	position: relative;
+	border: 3px solid #fff;
+	width: 575px;
+	height: 473px;
+	left: 575px;
+	top: 60px;
+	border-radius: 46px;
+	padding: 44px 53px 44px 53px;
+}
+
+.calendar_text_box{
+	position: relative;
+	width: 230px;
+	height: 345px;
+	border-right: 3px solid #FFFFFF;
+	float: left;
+	padding-right: 50px;
+	padding-left: 30px;
+}
+.calendar_text{
+	font-size: 40px;
+	font-weight: bold;
+	color: #FFFFFF;
+	margin-top: 9px;
+}
+.calendar_text_b{
+	
+	font-size: 40px;
+	font-weight: bold;
+	color: #FFFFFF;
+	margin-top: 43px;
+}
+.calendar_text_a{
+	
+	font-size: 15px;
+	font-family: "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	color:#FFF;
+	text-align: center;
+	
+}
+.calendar_text_box2{
+	position: relative;
+	width: 230px;
+	height: 345px;
+	float: left;
+}
+.calendar_text_c{
+	text-align: center;
+	font-size: 40px;
+	font-weight: bold;
+	color: #FFFFFF;
+	margin-top: 55px;
+}
+.calendar_text_d{
+	text-align: center;
+	font-size: 15px;
+	font-family:"Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	color:#FFF;
+	text-align: center;
+}
+
+.calendar_btn{
+	position: relative;
+	width: 432px;
+	height: 66px;
+	border: 2px solid #FFDD6B;
+	border-radius: 0 30px 0 30px;
+	top:375px;
+	left:150px;
+	text-align: center;
+	color:#44704D;
+	font-size: 44px;
+	font-weight: bold;
+	line-height:62px;
+	background-color: #fff;
+}
+
+
+/*******************베란다레시피*****************/
+#recipe{
+		
+	position: relative;
+	width:1920px;
+	height: 530px;
+	margin: 0 auto;
+	margin-top: 50px;
+}
+.recipe_text{
+		
+	font-size: 60px;
+	font-weight: bold;
+	margin-left: 400px;
+	color:#44704D;
+}
+.recipe_box{
+	
+	position:relative;
+	width: 500px;
+	margin-left: 50px;
+	float: left;
+	
+}
+.recipe_box_name{
+	position: relative;
+	font-size: 50px;
+	font-weight: bold;
+	color:#44704D;
+	margin-bottom: 10px;
+}
+ol tt{
+	color:#44704D;
+	font-size: 15px;
+	font-weight: 500;
+	margin-top: 50px;
+	font-family: "Noto Sans KR Black", "Noto Sans KR Bold", "Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+}
+.number{
+	font-family: "Noto Sans KR Black", "Noto Sans KR Bold", "Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	font-size:18px;
+	font-weight: normal;
+	color:black;
+}
+.red_line{
+	overflow-x: hidden;
+	position: relative;
+	right:20px;
+	width:650px;
+	background-image:url(../images/line.png);
+	background-repeat: no-repeat;
+}
+.recipe_btn{
+	font-family: "Noto Sans KR Black", "Noto Sans KR Bold", "Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+    position: relative;
+	text-align: center;
+	color:#44704D;
+	font-size:20px;
+	font-weight: bold;
+	line-height:62px;
+	float: left;
+	left:140px;
+}
+
+#line{
+	position: relative;
+	width: 100%;
+	border-top:1px solid #f7f7f7;
+	margin-top: 80px;
+
+}
+/******************************************************/
+
+section.module.parallax {
+    position: relative;
+    background-position: 50% 50%;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    -webkit-background-size: initial;
+    -moz-background-size: initial;
+    -o-background-size: initial;
+    background-size: initial;
+}
+
+section.module.parallax-1 {
+	
+  background-image:url(../images/paraback.png);
+	background-repeat: no-repeat;
+}
+
+
+.wrapper_parallox {
+  margin: 0 auto;
+	width: 100%;
+	height: 665px;
+}
+
+main_parallox {
+  display: block;
+  background-color: #fff;
+}
+
+.container_parallox {
+  width: 1150px;
+	margin: 0 auto;
+	overflow-y: hidden;
+	height: 665px;
+}
+section.module.parallax {
+  position:relative;
+  height: 665px;
+  background-position: 50% 50%;
+  background-repeat:no-repeat;
+  background-attachment: fixed;
+  -webkit-background-size: initial;
+  -moz-background-size: initial;
+  -o-background-size: initial;
+  background-size: initial;
+}
+
+
+/***텃밭정보*******************************/
+#garden_info{
+	
+    margin: 0 auto;
+	width: 1150px;
+	height: 500px;
+	font-family:"Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+}
+.garden_info_text{
+
+	font-size: 60px;
+	font-weight: bold;
+	font-family: "tvN 즐거운이야기 Bold", "tvN 즐거운이야기 Light", "tvN 즐거운이야기 Medium";
+}
+.info_info{
+	width: 298px;
+	height: 390px;
+	margin-top: 40px;
+	float: left;
+}
+.garden_info_name{
+	
+	font-size: 25px;
+	font-weight:680;
+	font-family: "tvN 즐거운이야기 Bold", "tvN 즐거운이야기 Light", "tvN 즐거운이야기 Medium";
+	padding-left: 20px;
+	color:#6E6E6E;
+}
+.garden_info{
+	margin-top: 10px;
+	overflow-y: hidden;
+	width: 268.75px;
+	height: 347px;
+	border: 1px solid #cccccc;
+	float: left;
+	padding: 28px 28px 25px;
+	border-radius: 20px;
+}
+.fa-seedling{
+	color: #44704D;
+	font-size: 20px;
+}
+.number1{
+	color: #44704D;
+	font-size:15px;
+	font-weight: bold;
+}
+.subject{
+	font-family:"Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	font-size: 22px;
+    font-weight: bold;
+    color: #111;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+}
+.line{
+	margin-top: 35px;
+	width:100%;
+	border: 1px solid #EEEEEE;
+}
+
+.fa-home{
+	position: relative;
+	top:4px;
+	color:#848484;
+	font-size: 20px;
+}
+.b{
+	margin-top:10px;
+}
+.c{
+	margin-top:10px;
+	overflow-y: hidden;
+}
+.d{
+	margin-top:10px;
+	overflow-y: hidden;
+}
+.add{
+	font-family:"Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	position: relative;
+	left: 3px;
+	font-size:15px;
+	font-weight: bold;
+}
+.add_info{
+	font-family:"Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	position: relative;
+	left: 3px;
+	font-size:15px;
+}
+.fa-mobile-alt{
+	position: relative;
+	top:5px;
+	left:5px;
+	color:#848484;
+	font-size:20px;
+}
+.phone{
+		font-family:"Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	position: relative;
+	left:13px;
+	font-size:15px;
+	font-weight: bold;
+}
+.phone_info{
+	font-family:"Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	position: relative;
+	left:11px;
+	font-size:15px;
+}
+.fa-square{
+	position: relative;
+	top:7px;
+	left:3px;
+	color:#848484;
+	font-size:20px;
+}
+.area{
+	font-family:"Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	position: relative;
+	left: 9px;
+	top:2px;
+	font-size:15px;
+	font-weight: bold;
+}
+.area_info{
+		font-family:"Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	position: relative;
+	top:2px;
+	left:8px;
+	font-size:15px;
+}
+.area1{
+		font-family:"Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	position: relative;
+	left: 27px;
+	top:2px;
+	font-size:15px;
+	font-weight: bold;
+}
+.area_info1{
+		font-family:"Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	position: relative;
+	top:2px;
+	left:29px;
+	font-size:15px;
+}
+.fa-won-sign{
+	position: relative;
+	top:7px;
+	color:#848484;
+	font-size:20px;
+}
+.price{
+		font-family:"Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	position: relative;
+	left: 4px;
+	top:2px;
+	font-size:15px;
+	font-weight: bold;
+}
+.price_info{
+		font-family:"Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	position: relative;
+	top:2px;
+	left:5px;
+	font-size:15px;
+}
+
+.sudden_sale{
+	width: 820px;
+	height: 390px;
+	float: right;
+		margin-top: 40px;
+}
+.sudden_sale_list{
+	border-top: 3px solid #44704D;
+	border-right: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	width: 820px;
+	height: 347px;
+	margin-top: 10px;
+}
+.sudden{
+	border-bottom: 1px solid #cccccc;
+	overflow-y: hidden;
+	height:61px;
+}
+.sudden_sale_add{
+	font-size: 15px;
+	font-family:"Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin"; 
+	padding:5px 0px 0px 28px;
+	color:#44704D;
+	float: left;
+}
+.sudden_sale_add1{
+	font-size: 15px;
+	font-family:"Noto Sans KR Light", "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin"; 
+	padding:5px 0px 0px 108px;
+	color:#313131;
+	float: left;
+}
+.fa-plus-circle{
+	color:#44704D;
+	font-size:25px;
+	float: right;
+	padding:5px 61px 0 0px;
+}
+
+
+.toma1{
+	position: relative;
+	top:100px;
+}
+/***************************************************************************/
+
+
+.main_best{
+	
+	width:1150px;
+	margin:0 auto;
+	margin-top: 70px;
+}
+.sub_best{
+	font-size: 60px;
+	font-weight: bold;
+	font-family: "tvN 즐거운이야기 Bold", "tvN 즐거운이야기 Light", "tvN 즐거운이야기 Medium";
+}
+.best{
+	margin-top: 30px;
+}
+.best_product{
+	
+    width:20%;
+	height:400px;
+	display:inline-block;
+	
+}
+.best_product img{
+	margin: 0px 19px;
+	position: relative;
+  	border:0.5px solid rgba(204,204,204,0.7);
+    text-align: center;
+}
+.best_product_name{
+	width:262px;
+	 display: block;
+	   margin-top: 11px;
+	font-family: "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	font-size: 16px;
+	color: #333
+ }
+ .best_product_price{
+	width:262px;
+	 display: block;
+	  padding: 6px 0px 0px 0px;
+	 font-family:"Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	font-size: 16px;
+	line-height: 20px;
+	padding-top: 6px;
+	font-weight: 700;
+	color: #333;
+ 
+ }
+
+.autoplay{
+	width:1050px;
+	margin:0 auto;
+}
+
+.autoplay button{
+	position: absolute;
+    top: 39%;
+    width: 70px;
+    height: 150px;
+    transform: translateY(-50%);	
+	border: 0;
+    background:0 0;
+	cursor: pointer;
+	    outline: 0;
+	}
+	
+.autoplay button:before{
+	color:black;
+	font-size:30px;
+}
+.autoplay button.slick-prev {
+	left:-70px;
+	font-size:0;
+	color:transparent;
+}
+
+.autoplay button.slick-next {
+	right:-65px;
+	font-size:0;
+	color:transparent;
+}
+
+.autoplay button.slick-prev:before{ 
+ 
+content: "\e93b";
+font-family:'xeicon';
+	
+}
+	
+.autoplay button.slick-next:before{ 
+  
+   font-family:'xeicon';
+content: "\e93e";
+	
+}
+.qwe{
+	width:280px;
+	
+	box-sizing:border-box;
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+/********************************************/
+#footer{
+	position: relative;
+	width:100%;
+}
+.footer_inner{
+	position: relative;
+	margin: 0 auto;
+	 width:1150px;
+	height: 215px;
+	margin-bottom:50px;
+	display:block;
+	overflow-y:hidden;
+}
+.copyright {
+	width:450px;
+	float:left;
+	text-align: left;
+	overflow: hidden;
+	box-sizing: border-box;	
+}
+.copyright1 {
+	width:420px;
+	float:left;
+	text-align: left;
+	overflow: hidden;
+	box-sizing: border-box;
+	margin-left: 100px;
+	height: 210px;
+}
+.copyright2 {
+	width:140px;
+	float:left;
+	text-align: left;
+	overflow: hidden;
+	box-sizing: border-box;
+	margin-left:20px;
+	height:140px;
+}
+.footer_image{
+	height:50px;
+	float:right;
+	margin-right:200px;
+	margin-top:80px;
+}
+.follow{
+	text-align: center;
+	font-size:35px;
+	padding-top:17px;
+}
+dt{
+	font-family:  'Noto Sans KR Regular', 'Noto Sans KR Thin';
+	margin-left: 10px;
+	float: left;
+	padding-top:5px;
+	font-size:15px;
+	color: #707070;
+}
+.last{
+	padding-top:16px;
+}
+.xi-call-incoming{
+	font-size:35 px;	
+}
+dd{
+	font-family:  'Noto Sans KR Regular', 'Noto Sans KR Thin';
+	font-size:35px;
+	padding-top:17px;
+	margin-bottom:29px;
+	color:#707070
+}
+.fa-phone-alt{
+	position: relative;
+	top:5px;
+	left:10px;
+	font-size: 30px;
+	color:#707070
+}
+.fa-facebook-f{
+	font-size: 25px;
+	padding-left: 9px;
+	color:#707070
+	
+}
+.fa-instagram{
+	font-size: 25px;
+	padding-left: 20px;
+	color:#707070
+}
+.fa-twitter{
+	font-size: 25px;
+	padding-left: 20px;
+	color:#707070
+}
+
+/************************************************/
+/* 모바일 햄버거*/
+/************************************************/
+

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<title>kichen garden</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/order.css">
+        <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+	    <script type="text/JavaScript" src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+        <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+		<script>
+			function kakao(){
+                var IMP = window.IMP; // 생략가능
+                IMP.init('imp24710214'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+                var msg;
+                
+                IMP.request_pay({
+                    pg : 'kakaopay',
+                    pay_method : 'kakaopay',
+                    merchant_uid : 'merchant_' + new Date().getTime(),
+                    name : '<%=goods[0].name%> 외 <%=count-1%>건',
+                    amount : $('.input_result_cost').val()
+                }, function(rsp) {
+                    if ( rsp.success ) {
+                        //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+                        jQuery.ajax({
+                            url: "/payments/complete", //cross-domain error가 발생하지 않도록 주의해주세요
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                imp_uid : rsp.imp_uid
+                                //기타 필요한 데이터가 있으면 추가 전달
+                            }
+                        }).done(function(data) {
+                            //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+                            if ( everythings_fine ) {
+                                msg = '결제가 완료되었습니다.';
+                                msg += '\n고유ID : ' + rsp.imp_uid;
+                                msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+                                msg += '\결제 금액 : ' + rsp.paid_amount;
+                                msg += '카드 승인번호 : ' + rsp.apply_num;
+                                
+                                alert(msg);
+                            } else {
+                                //[3] 아직 제대로 결제가 되지 않았습니다.
+                                //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+                            }
+                        });
+                        //성공시 이동할 페이지
+                        $('.form').submit();
+                        
+                    } else {
+                        msg = '결제에 실패하였습니다.';
+                        msg += '에러내용 : ' + rsp.error_msg;
+                        //실패시 이동할 페이지
+                        location.href="/";
+                        alert(msg);
+                    }
+                });
+			}
+			
+            function openDaumZipAddress() {
+
+                new daum.Postcode({
+
+                    oncomplete:function(data) {
+
+                        $("input[name=new_zonecode]").val(data.zonecode);
+
+                        $("input[name=new_roadAddress]").val(data.roadAddress);
+                        $("input[name=new_jibunAddress]").val(data.jibunAddress);
+
+                        $("input[name=new_detailAddress]").focus();
+
+                        console.log(data);
+
+                    }
+
+                }).open();
+
+			}
+
+			function display(){
+				var chkValue = $('input[type=radio][name=delivery]:checked').val();
+				if(chkValue=='1'){
+					$('#div1').css('display','block');
+					$('#div2').css('display','none');
+					console.log("1");
+				}else if(chkValue=='2'){
+					$('#div1').css('display','none');
+					$('#div2').css('display','block');
+					console.log("2");
+				}
+			}
+			function pointing(){
+				var user_point= $('.user_point').val();
+				var limit = parseInt($('.input_total').val())*0.2;
+				var point = $('.point').val();
+				console.log(limit);
+
+				if(point>user_point){
+					alert("포인트가 부족합니다!");
+				}else if(point<1000){
+					alert("포인트는 1000원 이상부터 사용가능합니다!");
+				}else if(point>limit){
+					alert("포인트는 상품 금액의 20% 까지만 사용 가능합니다!");
+
+				}else{
+					$('.usePoint').html(point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					$('.input_usePoint').val(point);
+					total();
+				}
+				
+			}
+
+			function total(){
+				var total = parseInt($('.input_total').val());
+				var discount = parseInt($('.input_discount').val());
+				var deliveryCost = parseInt($('.input_deliveryCost').val());
+				var usePoint = parseInt($('.input_usePoint').val());
+				console.log('total:'+total);
+				console.log('discount:'+discount);
+				console.log('deliveryCost:'+deliveryCost);
+				console.log('usePoint:'+usePoint);
+				var result = total-discount+deliveryCost-usePoint;
+				console.log(result);
+				$('.result_cost').html(result.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('.input_result_cost').val(result);
+			}
+		</script>
+		
+
+	
+		<!-- 
+			반응형 했던거
+        <link rel="stylesheet" href="css/tablet.css" media="all and (min-width:900px) and (max-width:1242px)">
+		<link rel="stylesheet" href="css/mobile.css" media="all and (min-width:320px) and (max-width:899px)">
+		-->
+		<script src="https://kit.fontawesome.com/d0c252d761.js" crossorigin="anonymous"></script><!--아이콘 링크 -->
+    </head>
+    <body onload="total()">
+		
+        <header id="main-header">
+			<!--
+			
+			반응형 모바일 햄버거 눌렀을떄 메뉴
+			<nav id="mobile">
+				<div class="mobile_top">
+				<li>
+					<a href="#">로그인</a>
+				</li>
+					<li>
+						/
+					</li>
+				<li>
+					<a href="#">회원가입</a>
+				</li>
+					
+				<li class="button2"><a href="">
+<img src="Images/cart.png" width="23" height="23"></a></li>
+					<br>
+<li class="button1">
+	<i class="xi-search"></i>
+<input type="text" placeholder="Search.." name="search">
+					</li>
+				</div>
+			<ul>
+				<li> 
+					<a href="">텃밭세트 </a>
+				</li>
+				<li>
+					<a href="">씨앗</a>
+				</li>
+				<li>
+					<a href="">모종</a>
+				</li>
+				<li>
+					<a href="">흙</a>
+				</li>
+				<li>
+					<a href="">화분</a> 
+				</li>
+				<li>
+					<a href="">원예도구</a> 
+				</li>
+			</ul>
+		</nav>
+		<a class="tab" href=""><span>tab</span></a>
+	<div class="dim"></div>
+-->
+          
+			<nav class="header_inner">
+				<div class="header_menu">
+					<!--헤더 메뉴-->
+					<div class="logo">
+						<a href="/">
+							<img src="/images/logo.png" width="300" >
+						</a>
+					</div>
+					<!--
+							반응형 로고
+					<div class="logo_mobile">
+						<img src="images/mobile_logo.png" width="150" >
+					</div>
+					
+					<!----검색버튼 누른후 회색 화면 -->		
+					<div id="myOverlay" class="overlay">
+						<div class="overlay-content">
+							<form action="/search" method="post">
+								<p class="closebtn" onclick="closeSearch()" title="Close Overlay">X</p>
+								<input type="text" placeholder="Search.." name="search">
+								<button type="submit"><i class="fas fa-search"></i></button>
+							</form>
+						</div>
+						
+					</div>	
+				<!----검색버튼 누른후 회색 화면 닫기-->		   
+							
+								
+							
+			<!-- 로그인 -->
+					<ul class="head_btn">
+						<%
+							if(session){
+						%>
+							<li><a href="/mypage"><span>마이페이지</span></a></li>
+							<li><a href="/logout"><span>로그아웃</span></a></li>
+							<li><%=session.name%>님, 어서오세요</li>
+							<li><a href="/cart">
+								<span><i class="fas fa-shopping-cart"></i></span></a></li>
+							<li class="button">
+								<button class="openBtn" onclick="openSearch()">
+									<i class="fas fa-search"></i>
+								</button>
+							</li>
+						<%
+							}else{
+						%>
+							<li><a href="/join"><span>회원가입</span></a></li>
+							<li><a href="/login"><span>로그인</span></a></li>
+							<li class="button">
+								<button class="openBtn" onclick="openSearch()">
+									<i class="fas fa-search"></i>
+								</button>
+							</li>
+						<%
+							}
+						%>
+
+					</ul>
+					<!-- 로그인 닫기-->
+
+					<!-- 서브메뉴 -->
+					<ul class="head_sub">
+
+						<li>
+							<a href="/store">
+								<span>STORE</span>
+							</a>
+						</li>
+						<li>
+							<a href="/recipe">
+								<span>베란다 레시피</span>
+							</a>
+						</li>
+						<li>
+							<a href="/garden">
+								<span>텃밭정보</span>
+							</a>
+						</li>
+						<li>
+							<a href="/calender">
+								<span>파종달력</span>
+							</a>
+						</li>
+						<li>
+							<a href="/farm">
+								<span>온라인 텃밭</span>
+							</a>
+						</li>
+					</ul><!-- 서브메뉴 닫기-->
+				</div><!--헤드인-->
+	<!--헤더 메뉴닫기-->
+	<!--헤더닫기-->
+			</nav>
+		</header>
+        <div id="line1">
+		<img src="/images/head_line.png"></div>
+        
+        <div id="main"> 
+			
+			<!-----회원가입--->
+			
+		<div id="order">
+			<div class="order_text">
+				<tt class="name">주문서</tt><br>
+				<tt class="name2">주문하실 상품명 및 수량을 정확하게 확인해 주세요.</tt>
+			</div>
+			<form class="form" action="/order" method="post">
+			
+				<div class="order_info">
+					<tt class="order_info_text">상품정보</tt>
+				</div>
+				<div class="order_info2">
+					<p class="order_info_text2">상품정보</p>
+					<p class="order_info_text3">상품개수</p>
+					<p class="order_info_text3">상품가격</p>
+				</div>
+				<div class="info">
+					<%
+						for(var i=0; i < goods.length; i++){
+							var price = goods[i].total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					%>
+					<div class="border">
+						<input type="hidden" name="c_id" value="<%=c_id[i]%>">
+						
+						<p class="image"><img src="/images/store_sum_img_<%=goods[i].g_id%>.png" style="width: 150px; height: 150px; position: relative; left:50px;"></p>
+						<div class="info_name">
+							<p class="info_name_text"><%=goods[i].name%><input type="hidden" value="<%=goods[i].g_id%>" name="g_id"></p>
+						</div>
+						<div class="info_price">
+							<p class="info_price_name"><%=goods[i].quantity%><input type="hidden" value="<%=goods[i].quantity%>" name="quantity"></p>
+						</div>
+						<div class="info_price">
+							<p class="info_price_name"><%=price%>원</p>
+						</div>
+					</div>
+						
+					<%
+						}
+					%>
+				</div>
+				
+				
+				<div class="orderer">
+					<tt class="order_info_text">주문자 정보</tt>
+				</div>
+				
+				<table class="orderer_name">
+					<tr>
+						<td class="name3">
+							이름*
+						</td>
+							<td>
+							<input type="text" size="50" class="name_name" name="info_name" value="<%=user.name%>" readonly>
+						</td>
+					</tr>
+					<tr>
+						<td class="phone">
+							휴대폰*
+						</td>
+						<td>
+							<input type="text" size="50" class="phone_phone" name="info_phone1" value="<%=phone[0]%>" readonly> -
+							<input type="text" size="50" class="phone_phone" name="info_phone2" value="<%=phone[1]%>" readonly> -
+							<input type="text" size="50" class="phone_phone" name="info_phone3" value="<%=phone[2]%>" readonly>
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="phone">
+							이메일*
+						</td>
+							<td>
+							<input type="text" name="email" size="50" class="name_name" value="<%=user.email%>" readonly>
+						</td>
+					</tr>
+					
+				</table>
+					
+				<div class="orderer">
+					<tt class="order_info_text">배송정보</tt>
+				</div>
+				<table class="orderer_name">
+					
+					<tr>
+						<td class="name3">
+							배송지 선택
+						</td>
+						<td class="aaa">
+							<input type="radio" name="delivery" value="1" onclick="display()" checked>&nbsp;&nbsp;주문자 정보와 동일&nbsp;&nbsp;
+							<input type="radio" name="delivery" value="2" onclick="display()">&nbsp;&nbsp;신규배송지
+						</td>
+					</tr>
+				</table>
+				<div id="div1" style="display: block;">
+					<table class="orderer_name">
+						<tr>
+							<td class="name3">
+								주소*
+							</td>
+								<td><input id="zonecode" name="zonecode" class="zonecode" type="text" value="<%=user.zonecode%>" readonly/>
+		
+									&nbsp;
+		
+									<br/>
+		
+									<input type="text" class="address" id="roadAddress" name="roadAddress" value="<%=user.roadaddress%>" placeholder="도로명 주소" readonly/>
+									
+									<input type="text" class="address" id="jibunAddress" name="jibunAddress" value="<%=user.jibunaddress%>" placeholder="지번 주소" readonly/>
+		
+									<br>
+		
+									<input type="text" id="detailAddress" class="address" name="detailAddress" value="<%=user.detailaddress%>" placeholder="상세 주소"/>
+							</td>
+						</tr>
+						<tr>
+							<td class="phone">
+								수령인 이름*
+							</td>
+								<td>
+								<input type="text" name="name" size="50" class="name_name" value="<%=user.name%>">
+							</td>
+						</tr>
+						<tr>
+							<td class="phone">
+								휴대폰*
+							</td>
+								<td>
+						<input type="text" name="phone1" size="50" class="phone_phone" value="<%=phone[0]%>"> -
+						<input type="text" name="phone2" size="50" class="phone_phone" value="<%=phone[1]%>"> -
+						<input type="text" name="phone3" size="50" class="phone_phone" value="<%=phone[2]%>">
+							</td>
+						</tr>
+						<tr>
+							<td class="phone">
+								배송 요청사항
+							</td>
+								<td>
+								<textarea class="deliveryMemo" name="memo" maxlength="50" style="margin: 0px; width: 600px; height: 73px;"></textarea>
+							</td>
+						</tr>
+						
+					</table>
+					
+				</div>
+				<div id="div2" style="display: none;">
+					<table class="orderer_name">
+						<tr>
+							<td class="name3">
+								주소*
+							</td>
+								<td class="aaa"><input id="zonecode" name="new_zonecode" class="zonecode" type="text" readonly/>
+		
+									&nbsp;
+		
+									<input type="button" class="enter" onClick="openDaumZipAddress();" value = "주소 찾기" />
+		
+									<br/>
+		
+									<input type="text" class="address" id="roadAddress" name="new_roadAddress" placeholder="도로명 주소" readonly/>
+									
+									<input type="text" class="address" id="jibunAddress" name="new_jibunAddress"  placeholder="지번 주소" readonly/>
+		
+									<br>
+		
+									<input type="text" id="detailAddress" class="address" name="new_detailAddress" placeholder="상세 주소"/>
+		
+							</td>
+						</tr>
+						<tr>
+							<td class="phone">
+								수령인 이름*
+							</td>
+								<td>
+						<input type="text" name="new_name" size="50" class="name_name">
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="phone">
+								휴대폰*
+							</td>
+								<td>
+								
+						<input type="text" name="new_phone1" size="50" class="phone_phone"> -
+						<input type="text" name="new_phone2" size="50" class="phone_phone"> -
+						<input type="text" name="new_phone3" size="50" class="phone_phone">
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="phone">
+								배송 요청사항
+							</td>
+								<td>
+								<textarea class="deliveryMemo" name="new_memo" maxlength="50" style="margin: 0px; width: 600px; height: 73px;"></textarea>
+							</td>
+						</tr>
+						
+					</table>
+					
+				</div>
+				<div class="orderer_pay">
+					<tt class="order_info_text">결제수단</tt>
+				</div>
+				<table class="orderer_name_pay">
+					<tr>
+						<td class="name4" style="padding-left:100px">
+							<input type="radio" name="pay" value="카카오페이" class="pay" checked><span class="pay">카카오 페이</span> 
+						</td>
+						<td></td>
+
+					</tr>				
+				</table>
+				<%
+					var c_user_point = user.point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					var available_point = (total*0.02).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				%>
+				<table class="orderer_name_pay">
+					<tr>
+						<td class="name4" style="padding-left:100px"><span class="pay">적립금 사용</span>
+						</td>
+						<td class=point_td>
+							<p class="pay">보유 적립금:<span class="pay"><%=c_user_point%></span>원
+							<input type="hidden" class="user_point" value="<%=user.point%>"></p><br>
+							<span class="pay" style="font-size: 8px; color:gray;">최대 <%=available_point%>원 사용 가능</span>
+							<input type="text" id="point" class="point" name="usePoint" value="0" ><span class="pay">원</span>
+							<input type="button" value="적립금 사용" class="enter_point" onclick="pointing()">
+						</td>
+					</tr>			
+				</table>
+				
+				<div class="orderer_receirt">
+					<tt class="order_info_text">결제금액</tt>
+				</div>
+				
+				
+				<div class="receipt">
+					
+					<table id="receipt_table" width="100%">
+	<tbody>
+		<%
+			var c_total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			var c_deliveryCost = deliveryCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		%>
+		
+	<tr class="tbl_first">
+	<th>상품 금액</th>
+	<td id="paper_goodsprice">
+		<span id="special_discount_amount" class="total"><%=c_total%></span>원<input type="hidden" value="<%=total%>" class="input_total" name="input_total">
+	</td>
+	</tr>
+	<tr class="tbl_hr">
+	<th><hr class="line"></th>
+	<td><hr class="line"></td>
+	</tr>
+	<tr>
+		
+	<th>상품할인금액</th>
+	<td class="sales_area">
+		<span id="special_discount_amount" class="discount">0</span>원<input type="hidden" value="0" name="input_discount" class="input_discount">
+	</td>
+	</tr>
+	<tr>
+		
+	<th>배송비</th>
+	<td class="delivery_area">
+		<span id="special_discount_amount" class="deliveryCost"><%=c_deliveryCost%></span>원<input type="hidden" value="<%=deliveryCost%>" name="input_deliveryCost" class="input_deliveryCost">
+	</td>
+	</tr>
+
+	<tr class="tbl_emoney">
+		
+		
+	<th>적립금사용</th>
+	<td>
+		<span class="usePoint" id="special_discount_amount">0</span>원<input type="hidden" value="0" class="input_usePoint">
+	</td>
+
+	</tr>
+	<tr class="tbl_hr">
+	<th><hr class="line"></th>
+	<td><hr class="line"></td>
+	</tr>
+	<tr class="tbl_last">
+	<th>최종결제금액</th>
+	<td  style="color:red;">
+	<span id="special_discount_amount" class="result_cost">0</span><input type="hidden" name="total" class="input_result_cost">원
+	</td>
+	</tr>
+	</tbody>
+	</table>
+				</div>
+				<div class="btn">
+					<input type="button" onclick="kakao()" value="결제하기" class="pay_btn">
+				</div>
+			</form>
+		</div>
+
+<div id="line"></div>
+			
+		<!--푸터-------------->
+ <div id="footer">
+<div class="footer_inner">
+  <div class="copyright"> 
+	  <img src="/images/footer_logo.png" width="250" style="float:left; padding-left: 10px; padding-top:26px; margin-bottom: 38px;"><br><br>
+	  <dt>SHOP NAME : kichen garden &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;OWNER : 강정우</dt>
+	  <dt>Fax. 02-2222-2222   &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;TEL: 02-2222-2222</dt>
+	  <dt>사업자등록번호 : 2222-22-222222 </dt> 
+	  <dt>소재지: 충청남도 천안시 서북구 성환읍 남서울대학교 </dt> 
+  </div> 
+	  <div class="copyright1">
+		  <dd><i class="fas fa-phone-alt"></i>&ensp;02-2222-2222</dd>
+	  <dt>MON - FRI : PM 1:00 ~ PM 6:00</dt>
+	  <dt>(SAT,SUN,HOLIDAY CLOSED)</dt>
+		  <br><br><br>
+	  <dt class="last">Copyright (c) kichen garden All Rights Reserved</dt> 
+  </div>
+	<div class="copyright2">
+		<dd class="follow">follow</dd>
+		<a href="#"><i class="fab fa-facebook-f"></i></a>
+		<a href="#"><i class="fab fa-instagram"></i></a>
+		<a href="#"> <i class="fab fa-twitter"></i></a>
+  </div>
+</div>
+				</div>
+		</div>
+<!--푸터-------------->
+         <!-- end container -->
+<!-- 제이쿼리,스크립트 -->
+       <script src="/js/scripts.js"></script>
+    </body>
+</html>

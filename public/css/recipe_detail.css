@@ -1,0 +1,666 @@
+/************************************************/
+/* General */
+/************************************************/
+* {
+    -webkit-font-smoothing: antialiased;
+   box-sizing: border-box;
+   margin:0;
+   padding:0;
+   list-style:none;
+	overflow-x:hidden;
+       
+}
+a{ 
+text-decoration:none;
+color:#000000;
+}
+img{
+	overflow: hidden;
+}
+
+
+
+/************************************************/
+/* Header */
+/************************************************/
+header {
+    position:fixed;
+    top: 0;
+    background:#FFF;
+    width:100%;
+    height:152px;
+	z-index:9000; 
+	transition:.2s ease-in-out;
+	overflow-y:hidden;
+	 font-family:"tvN 즐거운이야기 Bold", "tvN 즐거운이야기 Light", "tvN 즐거운이야기 Medium";
+}
+/*****헤더 제이쿼리 ***/
+header.shrink{
+	height:5.3em;
+	border-bottom: 1px solid rgb(68,112,77);
+	background: rgba(255,255,255,1); 
+	transition:.5s ease-in-out;
+}
+header.shrink .head_btn{
+	display: none;	
+}
+header.shrink .head_sub{
+	 padding-top:30px;
+}
+/*************************/
+.header_inner{
+	 width:1150px;
+     margin: 0 auto;
+     overflow-style: none; 
+     padding:0px 10px;
+}
+.logo {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.logo_mobile {
+	display: none;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+/**********************************/
+.header_menu{
+    width:1150px;
+   margin:0 auto;
+}
+.head_btn{
+
+    width:1150px;
+   list-style: none;
+   float:right;
+   position:relative;
+   padding-top:32px;
+   font-weight:600;
+}
+.head_btn li{   
+   float:right;
+   padding-left:20px;  
+	padding-right:8px;
+   font-size:24px;
+}
+
+.head_btn .button1{
+  padding-right:16px; 
+}
+
+.head_sub{
+   float:left;
+   list-style:none;
+    width:1150px;
+   padding-top:50px;
+  font-weight: bold;
+}
+.head_sub li{
+   float:right;   
+   padding-left:50px; 
+   position:relative;
+   font-size:30px;
+   padding-right:8px;
+}
+.fa-search{
+	font-size:15px;
+}
+
+.fa-shopping-cart{
+	font-size:15px;
+}
+
+
+
+
+
+
+
+
+
+
+/**검색************************************/
+.openBtn {
+    cursor: pointer;
+    border: none;
+	background-color: #fff;
+}
+.overlay {
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.3);
+  overflow: hidden;/* Black with a little bit see-through */
+}
+
+/* The content */
+.overlay-content {
+  display: block;
+  position: relative;
+  top: 40%;
+  width: 400px;
+  margin:0 auto;
+}
+
+/* Close button */
+.overlay .closebtn {
+  margin-left:400px;
+  font-size:50px;
+  cursor: pointer;
+  color: black;
+}
+
+.overlay .closebtn:hover {
+  color: #ccc;
+}
+
+/* Style the search field */
+.overlay input[type=text] {
+  padding: 15px;
+  font-size: 17px;
+  border: none;
+  float: left;
+  width: 80%;
+  background: white;
+}
+
+.overlay input[type=text]:hover {
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+.overlay button {
+  float: left;
+  width: 20%;
+  padding: 15px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.overlay button:hover {
+  background: #bbb;
+}
+.slide-image{
+	height: 800px;
+}
+
+
+
+
+
+
+
+
+/************************온라인 텃밭**********************/	
+
+#main{
+	width:100%;
+	padding-top:146px;	
+	overflow-y:hidden;
+}
+#online_garden_content{
+	width:1150px;
+	margin: 0 auto;
+}
+.image{
+	float: left;
+}
+.product_info{
+	width: 1150px;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+.product_info_name{
+	font-size: 24px;
+	font-family:"Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	padding: 10px 0 29px;
+	overflow-y: hidden;
+	 border-bottom: 1px solid #f4f4f4;
+}
+.name{
+	font-size: 17px;
+	font-family:"Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	padding: 30px 0 5px;
+}
+.pay{
+	font-size: 30px;
+	font-family:"Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	padding: 10px 0 29px;
+	padding-bottom: 30px;
+	
+}
+.goods_info{
+	font-size: 15px;
+	border-bottom: 1px solid #f4f4f4;
+	margin-top: 10px;
+}
+.goods_info1{
+	margin-top: 10px;
+	font-size: 15px;
+}
+.goods_info dd{
+	font-size: 30px;
+}
+.goods_info dt{
+	font-size: 15px;
+}
+.goods_info1{
+	font-size: 15px;
+}
+.goods_info1 dd{
+	font-size: 30px;
+}
+.goods_info1 dt{
+	font-size: 15px;
+}
+.goods_info .tit {
+    float: left;
+    width: 150px;
+    font-size: 20px;
+    color: #666;
+	padding-top: 17px;
+}
+.goods_info .tit1 {
+	font-weight: 200;
+    font-size: 25px;
+    color: #666;
+	padding-top: 17px;
+	text-align: center;
+}
+.goods_info .desc {
+    overflow: hidden;
+    font-size: 20px;
+    word-break: break-all;
+}
+.goods_info1 .tit {
+    float: left;
+    width: 150px;
+    font-size: 20px;
+    color: #666;
+	padding-top: 17px;
+}
+.goods_info1 .tit1 {
+	font-weight: 200;
+    font-size: 25px;
+    color: #666;
+	padding-top: 17px;
+	text-align: center;
+}
+.goods_info1 .desc {
+    overflow: hidden;
+    font-size: 20px;
+    word-break: break-all;
+}
+.tab_detail {
+	font-family:"Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+    height: 39px;
+    margin: 0 0 20px 30px;
+    border-bottom: 1px solid #44704D;
+	font-weight: normal;
+}
+.tab_detail li {
+    float: left;
+    text-align: center;
+    margin: 0 0 0 1px;
+}
+.tab_detail li.selected a {
+    position: relative;
+    color: #fff;
+    font-weight:normal;
+    background: #44704D;
+}
+ .tab_detail li a {
+    display: block;
+    width: 100%;
+    color: #666;
+    background-color: #eee;
+    font-size: 14px;
+    height: 38px;
+    padding: 0 28px;
+    line-height: 38px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+.cont{
+	margin-left: 30px;
+	margin-top: 15px;
+}
+.board {
+    padding: 0 0 100px;
+    color: #353535;
+    line-height: 18px;
+}
+div.board p.desc {
+	height: 20px;
+    padding: 0 10px 0 30px;
+}
+div.board p.nodata {
+    margin: 15px 0 0 30px;
+    border: 1px solid #d7d5d5;
+    font-weight: bold;
+    color: #3f414d;
+    line-height: 39px;
+    text-align: center;
+}
+div.board > .btnArea a {
+    padding: 8px 20px;
+    background-color: #44704D;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 12px;
+}
+div.board .btnArea {
+    padding: 10px 0;
+    text-align: right;
+}
+.recipe_info{
+	text-align: center;
+}
+.fa-clock{
+	font-size: 20px;
+	position: relative;
+	top:3px;
+	right: 5px;
+}
+.fa-running{
+		font-size: 20px;
+	position: relative;
+	top:3px;
+	right:15px
+}
+.btn{
+	position: fixed;
+}
+ .btm h2 {
+    font-size: 24px;
+    font-family:"Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+    color: #999;
+  	margin-top: 10px;
+}
+ .btm .dropdown {
+    top: 18px;
+    font-size: 14px;
+	 font-family:"Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+}
+ .btm .lst_ingrd {
+    width: 100%;
+    margin-top: 19px;
+	margin-left: 40px;
+}
+ .btm .lst_ingrd li {
+    width:300px;
+    overflow: hidden;
+    font-size: 14px;
+    padding: 8px 19px;
+   
+}
+ .btm .lst_ingrd span {
+    float: left;
+   font-family:"Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+    max-width: 65%;
+    text-align: left;
+}
+ .btm .lst_ingrd em {
+	 font-style: normal;
+    float: right;
+  font-family:"Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+    text-align: right;
+    max-width: 35%;
+}
+
+.recipe_text{
+	width: 1150px;
+	margin: 0 auto;
+	margin-top: 50px;
+}
+.recipe_text h2{
+	font-size: 30px;
+	color:#3e3e3e;
+	border-top: 2px solid #cccccc;
+	padding-top: 50px;
+	padding-left: 30px;
+}
+
+/****************************************************/
+.main_best{
+	
+	width:1150px;
+	margin:0 auto;
+	margin-top: 70px;
+}
+.sub_best{
+	font-size: 30px;
+	color:#3e3e3e;
+	
+}
+.sub_best h2{
+	font-size: 30px;
+	color:#3e3e3e;
+	padding-left: 30px;
+}
+.best{
+	margin-top: 30px;
+}
+.best_product{
+	
+    width:20%;
+	height:400px;
+	display:inline-block;
+	
+}
+.best_product img{
+	margin: 0px 19px;
+	position: relative;
+  	border:0.5px solid rgba(204,204,204,0.7);
+    text-align: center;
+}
+.best_product_name{
+	width:262px;
+	 display: block;
+	   margin-top: 11px;
+	font-family: "Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	font-size: 16px;
+	color: #333
+ }
+ .best_product_price{
+	width:262px;
+	  padding: 6px 0px 0px 0px;
+	 font-family:"Noto Sans KR Medium", "Noto Sans KR Regular", "Noto Sans KR Thin";
+	font-size: 16px;
+	line-height: 20px;
+	padding-top: 6px;
+	font-weight: 700;
+	color: #333;
+ 
+ }
+
+.autoplay{
+	width:1050px;
+	margin:0 auto;
+}
+
+.autoplay button{
+	position: absolute;
+    top: 39%;
+    width: 70px;
+    height: 150px;
+    transform: translateY(-50%);	
+	border: 0;
+    background:0 0;
+	cursor: pointer;
+	    outline: 0;
+	}
+	
+.autoplay button:before{
+	color:black;
+	font-size:30px;
+}
+.autoplay button.slick-prev {
+	left:-70px;
+	font-size:0;
+	color:transparent;
+}
+
+.autoplay button.slick-next {
+	right:-65px;
+	font-size:0;
+	color:transparent;
+}
+
+.autoplay button.slick-prev:before{ 
+ 
+content: "\e93b";
+font-family:'xeicon';
+	
+}
+	
+.autoplay button.slick-next:before{ 
+  
+   font-family:'xeicon';
+content: "\e93e";
+	
+}
+.qwe{
+	width:280px;
+	
+	box-sizing:border-box;
+	
+}
+
+
+
+/*************************************************************
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line{
+	position: relative;
+	width: 100%;
+	border-top:1px solid #f7f7f7;
+	margin-top:70px;
+}
+
+
+/***푸ㅡ터*******************************/
+#footer{
+	position: relative;
+	width:100%;
+}
+.footer_inner{
+	position: relative;
+	margin: 0 auto;
+	 width:1150px;
+	height: 215px;
+	margin-bottom:50px;
+	display:block;
+	overflow-y:hidden;
+}
+.copyright {
+	width:450px;
+	float:left;
+	text-align: left;
+	overflow: hidden;
+	box-sizing: border-box;	
+}
+.copyright1 {
+	width:420px;
+	float:left;
+	text-align: left;
+	overflow: hidden;
+	box-sizing: border-box;
+	margin-left: 100px;
+	height: 210px;
+}
+.copyright2 {
+	width:140px;
+	float:left;
+	text-align: left;
+	overflow: hidden;
+	box-sizing: border-box;
+	margin-left:20px;
+	height:140px;
+}
+.footer_image{
+	height:50px;
+	float:right;
+	margin-right:200px;
+	margin-top:80px;
+}
+.follow{
+	text-align: center;
+	font-size:35px;
+	padding-top:17px;
+}
+dt{
+	font-family:  'Noto Sans KR Regular', 'Noto Sans KR Thin';
+	margin-left: 10px;
+	float: left;
+	padding-top:5px;
+	font-size:15px;
+	color: #707070;
+}
+.last{
+	padding-top:16px;
+}
+.xi-call-incoming{
+	font-size:35 px;	
+}
+dd{
+	font-family:  'Noto Sans KR Regular', 'Noto Sans KR Thin';
+	font-size:35px;
+	padding-top:17px;
+	margin-bottom:29px;
+	color:#707070
+}
+.fa-phone-alt{
+	position: relative;
+	top:5px;
+	left:10px;
+	font-size: 30px;
+	color:#707070
+}
+.fa-facebook-f{
+	font-size: 25px;
+	padding-left: 9px;
+	color:#707070
+	
+}
+.fa-instagram{
+	font-size: 25px;
+	padding-left: 20px;
+	color:#707070
+}
+.fa-twitter{
+	font-size: 25px;
+	padding-left: 20px;
+	color:#707070
+}
+
+/************************************************/
+/* 모바일 햄버거*/
+/************************************************/
+

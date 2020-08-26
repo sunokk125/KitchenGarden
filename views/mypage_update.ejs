@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<title>kichen garden</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/mypage_update.css">
+		 <link rel="stylesheet" href="/css/jquery.flipster.min.css">
+		 <script src="/js/jquery-3.1.1.min.js"></script>
+         <script type="text/JavaScript" src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+        <script src="/js/jquery.flipster.min.js"></script>
+        <script>
+            function openDaumZipAddress() {
+
+                new daum.Postcode({
+
+                    oncomplete:function(data) {
+
+                        $("#zonecode").val(data.zonecode);
+
+                        $("#roadAddress").val(data.roadAddress);
+                        $("#jibunAddress").val(data.jibunAddress);
+
+                        $("#detailAddress").focus();
+
+                        console.log(data);
+
+                    }
+
+                }).open();
+
+            }
+            function email(){
+                var email = $('#email3').val();
+                if(email=='직접입력'){
+                    $('#email2').val("");
+                    $('#email2').focus();
+                    $('#email2').removeAttr("readonly");
+                }else if(email=='naver.com'){
+                    $('#email2').attr("readonly",true);
+                    $('#email2').val("naver.com");
+                }else if(email=='daum.net'){
+                    $('#email2').attr("readonly",true);
+                    $('#email2').val("daum.net");
+                }else if(email=='gmail.com'){
+                    $('#email2').attr("readonly",true);
+                    $('#email2').val("gmail.com");
+                }
+            }
+            function del(){
+                var u_id=$('.u_id').val();
+                var del=confirm("회원 탈퇴 하시겠습니까?");
+
+                if(del){
+                    var form = document.createElement("form");
+                    form.setAttribute("method","post");
+                    form.setAttribute("action","/deleteUser");
+                                
+                    var input1 = document.createElement("input");
+                    input1.setAttribute("type","hidden");
+                    input1.setAttribute("name","u_id");
+                    input1.setAttribute("value","<%=session.u_id%>");
+                    form.appendChild(input1);
+
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            }
+        </script>
+		
+		
+
+	
+		<!-- 
+			반응형 했던거
+        <link rel="stylesheet" href="css/tablet.css" media="all and (min-width:900px) and (max-width:1242px)">
+		<link rel="stylesheet" href="css/mobile.css" media="all and (min-width:320px) and (max-width:899px)">
+		-->
+		<script src="https://kit.fontawesome.com/d0c252d761.js" crossorigin="anonymous"></script><!--아이콘 링크 -->
+    </head>
+    <body>
+		
+        <header id="main-header">
+			<!--
+			
+			반응형 모바일 햄버거 눌렀을떄 메뉴
+			<nav id="mobile">
+				<div class="mobile_top">
+				<li>
+					<a href="#">로그인</a>
+				</li>
+					<li>
+						/
+					</li>
+				<li>
+					<a href="#">회원가입</a>
+				</li>
+					
+				<li class="button2"><a href="">
+<img src="Images/cart.png" width="23" height="23"></a></li>
+					<br>
+<li class="button1">
+	<i class="xi-search"></i>
+<input type="text" placeholder="Search.." name="search">
+					</li>
+				</div>
+			<ul>
+				<li> 
+					<a href="">텃밭세트 </a>
+				</li>
+				<li>
+					<a href="">씨앗</a>
+				</li>
+				<li>
+					<a href="">모종</a>
+				</li>
+				<li>
+					<a href="">흙</a>
+				</li>
+				<li>
+					<a href="">화분</a> 
+				</li>
+				<li>
+					<a href="">원예도구</a> 
+				</li>
+			</ul>
+		</nav>
+		<a class="tab" href=""><span>tab</span></a>
+	<div class="dim"></div>
+-->
+          
+			<nav class="header_inner">
+				<div class="header_menu">
+					<!--헤더 메뉴-->
+					<div class="logo">
+						<a href="/">
+							<img src="/images/logo.png" width="300" >
+						</a>
+					</div>
+					<!--
+							반응형 로고
+					<div class="logo_mobile">
+						<img src="images/mobile_logo.png" width="150" >
+					</div>
+					
+					<!----검색버튼 누른후 회색 화면 -->		
+					<div id="myOverlay" class="overlay">
+						<div class="overlay-content">
+							<form action="/search" method="post">
+								<p class="closebtn" onclick="closeSearch()" title="Close Overlay">X</p>
+								<input type="text" placeholder="Search.." name="search">
+								<button type="submit"><i class="fas fa-search"></i></button>
+							</form>
+						</div>
+						
+					</div>	
+				<!----검색버튼 누른후 회색 화면 닫기-->		   
+							
+								
+							
+			<!-- 로그인 -->
+					<ul class="head_btn">
+						<%
+							if(session){
+						%>
+							<li><a href="/mypage"><span>마이페이지</span></a></li>
+							<li><a href="/logout"><span>로그아웃</span></a></li>
+							<li><%=session.name%>님, 어서오세요</li>
+							<li><a href="/cart">
+								<span><i class="fas fa-shopping-cart"></i></span></a></li>
+							<li class="button">
+								<button class="openBtn" onclick="openSearch()">
+									<i class="fas fa-search"></i>
+								</button>
+							</li>
+						<%
+							}else{
+						%>
+							<li><a href="/join"><span>회원가입</span></a></li>
+							<li><a href="/login"><span>로그인</span></a></li>
+							<li class="button">
+								<button class="openBtn" onclick="openSearch()">
+									<i class="fas fa-search"></i>
+								</button>
+							</li>
+						<%
+							}
+						%>
+
+					</ul>
+					<!-- 로그인 닫기-->
+
+					<!-- 서브메뉴 -->
+					<ul class="head_sub">
+
+						<li>
+							<a href="/store">
+								<span>STORE</span>
+							</a>
+						</li>
+						<li>
+							<a href="/recipe">
+								<span>베란다 레시피</span>
+							</a>
+						</li>
+						<li>
+							<a href="/garden">
+								<span>텃밭정보</span>
+							</a>
+						</li>
+						<li>
+							<a href="/calender">
+								<span>파종달력</span>
+							</a>
+						</li>
+						<li>
+							<a href="/farm">
+								<span>온라인 텃밭</span>
+							</a>
+						</li>
+					</ul><!-- 서브메뉴 닫기-->
+				</div><!--헤드인-->
+	<!--헤더 메뉴닫기-->
+	<!--헤더닫기-->
+			</nav>
+		</header>
+        
+        
+        <div id="main"> 
+			
+			<!-----온라인 텃밭--->
+			
+			
+			
+				
+            <div id="mypage">
+                <div class="mypage_1">
+                    <div class="mypage_2">
+                        <i class="fas fa-user"></i>
+                        <span class="mypage_name"><%=user.name%></span>
+                        <span class="name_1">님 </span> <br>
+                        
+                        <span class="name_2">1% 적립</span> 
+                        
+                            </div>
+                    <div class="mypage_3">
+                        <i class="fas fa-coins"></i>
+                        <span class="point"> 적립금</span><br>
+                        
+                        <a href="#">
+                        <span class="point_1"><%=user.point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%>원</span> 
+                        <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="mypage_3">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="point"> 장바구니</span><br>
+                        
+                        <a href="#">
+                        <span class="point_1"><%=count%>개</span> 
+                        <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="mypage_3">
+                        <i class="fas fa-seedling"></i>
+                        <span class="point"> 내 텃밭</span><br>
+                        
+                        <a href="#">
+                        <span class="point_2">물주러 가기</span> 
+                            
+                            <span class="arrow"><i class="fas fa-chevron-right"></i></span>
+                        </a>
+                    </div>
+            
+                </div>
+                
+                
+            </div>
+		
+		
+		
+            <div id="mygarden">
+                <div class="mygarden_name">
+                    <h2 class="tit_name">마이가든</h2>
+				<div class="inner_snb">
+				
+					<ul class="list_menu">
+				<li>
+				<a href="/mypage">주문 내역</a> 
+				</li>
+				<li>
+				<a href="/cart">장바구니</a> 
+				</li>
+				<li>
+				<a href="/point">적립금</a>
+				</li>
+				<li>
+				<a href="/update">개인 정보 수정</a>
+				</li>
+				</ul>
+                    
+                    </div>
+                </div>
+                
+                <div class="mygarden_sub_name">
+                    <h1 class="tit_name1">개인 정보 수정</h1>
+                </div>
+                <div class="field_head head_type1">
+    <h3 class="tit">기본정보</h3>
+    <p class="sub">*필수입력사항</p>
+    </div>
+    <form action="/update" method="post">
+            <div class="boardWrite">
+    <table class="tbl_comm">
+    <tbody>
+        <tr>
+    <td class="memberCols1">아이디*</td>
+    <td class="memberCols2">
+        <input type="hidden" value="<%=user.u_id%>" name="u_id" class="u_id">
+        <input type="text" value="<%=user.id%>" readonly="" class="id">
+    </td>
+    </tr>
+        
+    <tr>
+        <td class="memberCols1">
+            새 비밀번호*
+        </td>
+        <td class="memberCols2">
+            <input type="password" name="pw" size="50" class="id">
+        </td>
+    </tr>
+    <tr>
+        <td class="memberCols1">
+            새 비밀번호 확인*
+        </td>
+        <td class="memberCols2">
+            <input type="password" name="pwChk" size="50" class="id">
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="memberCols1">
+            이름*
+        </td>
+        <td class="memberCols2">
+            <input type="text" name="name" size="50" class="id" value="<%=user.name%>">
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="memberCols1">
+            이메일*
+        </td>
+        <td style="width: 600px;" class="memberCols2">
+            <input type="text" name="email1" size="50" class="email" value="<%=email[0]%>">
+            <span style="font-family: '나눔 고딕'; font-size: 20px;">@</span>
+            <%
+                if(email[1]=="naver.com"){
+                    %>
+                        <input type="text" name="email2" size="50" class="email" id="email2" value="<%=email[1]%>" readonly>
+                        <select class="email" onchange="email()" id="email3">
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;">직접입력</option>
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;" selected>naver.com</option>
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;">daum.net</option>
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;">gmail.com</option>
+                        </select>
+                    <%
+                }else if(email=="daum.net"){
+                    %>
+                        <input type="text" name="email2" size="50" class="email" id="email2" value="<%=email[1]%>" readonly>
+                        <select class="email" onchange="email()" id="email3">
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;">직접입력</option>
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;">naver.com</option>
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;" selected>daum.net</option>
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;">gmail.com</option>
+                        </select>
+                    <%
+                }else if(email[1]=="gmail.com"){
+                    %>
+                        <input type="text" name="email2" size="50" class="email" id="email2" value="<%=email[1]%>" readonly>
+                        <select class="email" onchange="email()" id="email3">
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;">직접입력</option>
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;">naver.com</option>
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;">daum.net</option>
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;" selected>gmail.com</option>
+                        </select>
+                    <%
+                }else{
+                    %>
+                        <input type="text" name="email2" size="50" class="email" id="email2" value="<%=email[1]%>">
+                        <select class="email" onchange="email()" id="email3">
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;" selected>직접입력</option>
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;">naver.com</option>
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;">daum.net</option>
+                            <option style="font-family:'나눔 고딕'; font-size: 14px;">gmail.com</option>
+                        </select>
+                    <%
+                }
+            %>
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="memberCols1">
+            휴대폰*
+        </td>
+        <td class="memberCols2">
+            <select class="phone" name="phone1">
+                <%
+                    if(phone[0]=="010"){
+                %>
+                        
+                <option style="font-family:'나눔 고딕'; font-size: 14px;" selected>010</option>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;">011</option>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;">016</option>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;">017</option>
+                <%
+                    }else if(phone[0]=="011"){
+                %>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;">010</option>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;" selected>011</option>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;">016</option>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;">017</option>
+                <%
+                    }else if(phone[0]=="016"){
+                %>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;">010</option>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;">011</option>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;" selected>016</option>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;">017</option>
+                <%
+                    }else{
+                %>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;">010</option>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;">011</option>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;">016</option>
+                <option style="font-family:'나눔 고딕'; font-size: 14px;" selected>017</option>
+                <%
+                    }
+                %>
+            </select>
+            <span style="font-family: '나눔 고딕'; font-size: 20px;">-</span>
+            <input type="text" name="phone2" size="50" class="phone" value="<%=phone[1]%>">
+            <span style="font-family: '나눔 고딕'; font-size: 20px;">-</span>
+            <input type="text" name="phone3" size="50" class="phone" value="<%=phone[2]%>">
+        </td>
+    </tr>
+    <tr>
+        <td class="memberCols1">
+            주소*
+        </td>
+        <td class="memberCols2">
+            <input id="zonecode" name="zonecode" class="address1" type="text" value="<%=user.zonecode%>" readonly/>
+
+            &nbsp;
+
+            <input type="button" class="enter" onClick="openDaumZipAddress();" value = "주소 찾기" />
+
+            <br/>
+
+            <input type="text" class="address" id="roadAddress" name="roadAddress" value="<%=user.roadaddress%>"  placeholder="도로명 주소" readonly/>
+            
+            <input type="text" class="address" id="jibunAddress" name="jibunAddress" value="<%=user.jibunaddress%>"  placeholder="지번 주소" readonly/>
+
+            <br>
+
+            <input type="text" id="detailAddress" class="address" name="detailAddress" value="<%=user.detailaddress%>" placeholder="상세 주소"/>
+
+        </td>
+    </tr>
+        
+    </tbody>
+    </table>
+    </div>
+            <div class="btn_water_box">
+                <button type="submit" class="btn_water">회원정보수정</button>
+                <button type="button" class="btn_water1" onclick="del()">탈퇴하기 </button>
+            </div>
+        </form>
+            </div>
+				
+		</div>
+				
+				
+		
+			
+		
+			
+			
+			
+			
+		
+			
+			
+  <!--메인배너 닫기-->
+
+
+<div id="line"></div>
+			
+		<!--푸터-------------->
+             <div id="footer">
+<div class="footer_inner">
+  <div class="copyright"> 
+	  <img src="/images/footer_logo.png" width="250" style="float:left; padding-left: 10px; padding-top:26px; margin-bottom: 38px;"><br><br>
+	  <dt>SHOP NAME : kichen garden &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;OWNER : 강정우</dt>
+	  <dt>Fax. 02-2222-2222   &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;TEL: 02-2222-2222</dt>
+	  <dt>사업자등록번호 : 2222-22-222222 </dt> 
+	  <dt>소재지: 충청남도 천안시 서북구 성환읍 남서울대학교 </dt> 
+  </div> 
+	
+	
+	
+	  <div class="copyright1">
+		  <dd><i class="fas fa-phone-alt"></i>&ensp;02-2222-2222</dd>
+	  <dt>MON - FRI : PM 1:00 ~ PM 6:00</dt>
+	  <dt>(SAT,SUN,HOLIDAY CLOSED)</dt>
+		  <br><br><br>
+	  <dt class="last">Copyright (c) kichen garden All Rights Reserved</dt> 
+  </div>
+	
+	<div class="copyright2">
+		<dd class="follow">follow</dd>
+		<a href="#"><i class="fab fa-facebook-f"></i></a>
+		<a href="#"><i class="fab fa-instagram"></i></a>
+		<a href="#"> <i class="fab fa-twitter"></i></a>
+	  
+		 
+
+  </div>
+  
+</div>
+				</div>
+			
+<!--푸터-------------->
+        </div> <!-- end container -->
+
+<!-- 제이쿼리,스크립트 -->
+       <script src="/js/scripts.js"></script>
+
+    </body>
+</html>

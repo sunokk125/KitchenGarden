@@ -1,0 +1,450 @@
+/************************************************/
+/* General */
+/************************************************/
+* {
+    -webkit-font-smoothing: antialiased;
+   box-sizing: border-box;
+   margin:0;
+   padding:0;
+   list-style:none;
+   font-family:"tvN 즐거운이야기 Bold", "tvN 즐거운이야기 Light", "tvN 즐거운이야기 Medium";
+       
+}
+a{ 
+text-decoration:none;
+color:#000000;
+}
+#wrap{
+   
+   width:100%;    
+   text-align:center;
+}
+
+#clear{
+   clear:both;
+}
+img{
+	overflow: hidden;
+}
+
+
+
+/************************************************/
+/* Header */
+/************************************************/
+header {
+    position:fixed;
+    top: 0;
+    background:#FFF;
+    width: 100%;
+    height:152px;
+	z-index:9000; 
+	transition:.2s ease-in-out;
+}
+/*****헤더 제이쿼리 ***/
+header.shrink{
+	height:5.3em;
+	border-bottom: 1px solid rgb(68,112,77);
+	background: rgba(255,255,255,1); 
+	transition:.5s ease-in-out;
+}
+header.shrink .head_btn{
+	display: none;	
+}
+header.shrink .head_sub{
+	 padding-top:30px;
+}
+/*************************/
+.header_inner{
+	 width:1358px;
+     margin: 0 auto;
+     overflow-style: none; 
+     padding:0px 10px;
+}
+.logo {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.logo_mobile {
+	display: none;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+/**********************************/
+.header_menu{
+   width:1358px;
+   margin:0 auto;
+}
+.head_btn{
+
+   width:1358px;
+   list-style: none;
+   float:right;
+   position:relative;
+   padding-top:32px;
+	font-weight:600;
+}
+.head_btn li{   
+   float:right;
+   padding-left:20px;   
+   font-size:24px;
+}
+
+.head_btn .button1{
+  padding-right:16px; 
+}
+
+.head_sub{
+   float:left;
+   list-style:none;
+   width:1358px;
+   padding-top:50px;
+  font-weight: bold;
+}
+.head_sub li{
+   float:right;   
+ 	 padding-left:50px; 
+   position:relative;
+   font-size:30px;
+   
+}
+.fa-search{
+	font-size:15px;
+}
+.fa-shopping-cart{
+	font-size:15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/**검색************************************/
+.openBtn {
+    cursor: pointer;
+    border: none;
+	background-color: #fff;
+}
+.overlay {
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.3);
+  overflow: hidden;/* Black with a little bit see-through */
+}
+
+/* The content */
+.overlay-content {
+  display: block;
+  position: relative;
+  top: 40%;
+  width: 400px;
+  margin:0 auto;
+}
+
+/* Close button */
+.overlay .closebtn {
+  margin-left:400px;
+  font-size:50px;
+  cursor: pointer;
+  color: white;
+}
+
+.overlay .closebtn:hover {
+  color: #ccc;
+}
+
+/* Style the search field */
+.overlay input[type=text] {
+  padding: 15px;
+  font-size: 17px;
+  border: none;
+  float: left;
+  width: 80%;
+  background: white;
+}
+
+.overlay input[type=text]:hover {
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+.overlay button {
+  float: left;
+  width: 20%;
+  padding: 15px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.overlay button:hover {
+  background: #bbb;
+}
+.slide-image{
+	height: 800px;
+}
+
+
+
+
+
+
+
+
+/************************메인*******************************************************/	
+
+#main{
+	width:100%;
+	padding-top:146px;	
+	height: 2000px;
+}
+#image{
+   width: 1357px;
+   margin: 0 auto;
+   overflow: hidden;
+
+}
+.main_image{
+	float:left;
+}
+.main_image1{
+	width:680px;
+	height: 482px;
+	float:left;
+	background:url('../images/main_image1.PNG') no-repeat;
+	
+}
+.month_seed{
+	margin: 0 auto;
+	padding-top: 217px;
+}
+h1{ 
+	margin: 0 auto;
+	width: 220px;
+    border: 1px solid red;
+	border-radius:20px;	
+}
+/**********************이미지&파종달****************************************/	
+
+#note{
+	height: 70px;
+	width: 1920px;	
+	margin-top:100px;
+}
+.note1{
+	width: 1223px;
+	height: 70px;
+	background-color:#B9BCC1; 
+	float: left;
+}
+.note2{
+	width:697px;
+	height:70px;
+	float:right;
+	background-color:#44704D; 
+}
+.note_text{
+	color:#fff;
+	font-size: 35px;
+	float: left;
+	margin-left:283px;
+	margin-top: 15px;
+	font-weight: bold;
+}
+.note_text1{
+	color:#fff;
+	font-size: 35px;
+	float: left;
+	margin-left:70px;
+	margin-top: 15px;
+	font-weight: bold;
+}
+.fa-plus-circle{
+	color:#fff;
+	font-size:50px;
+	float: left;
+	margin-left:420px;
+	margin-top: 10px;
+	font-weight: bold;
+}
+.note_text3{
+	color:#fff;
+	font-size: 35px;
+	float: left;
+	margin-left:65px;
+	margin-top: 15px;
+	font-weight: bold;
+}
+.note_text4 .fa-plus-circle{
+	color:#fff;
+	font-size:50px;
+	float: left;
+	margin-left:120px;
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+/*****************************새싹 상품안내************************/
+
+#seed_product{
+	margin: 0 auto;
+	margin-top:47px;
+	width: 1358px;
+	height: 470px;
+	background-color: rgba(112,112,112,0.15);
+	
+}
+.seed_product_text{
+	font-size: 30px;
+	color:#707070;
+	font-weight: bold;
+	padding-left:31px;
+	padding-top:18px;
+}
+.seed_product1{
+	width: 303px;
+	height: 400px;
+	margin-left: 30px;
+	margin-top:5px;
+	border: 1px solid #cccccc;
+	float: left;
+	background-color:#ffffff;
+}
+.seed_product1_text{
+	text-align: center;
+	font-size: 25px;
+	padding: 12px;
+}
+
+
+/*******************인스타*****************/
+
+#instagram{
+	margin: 0 auto;
+	width:1358px;
+	height:500px;
+	margin-top: 61px;
+	border: 1px solid #4B6736;
+}
+#instagram #coverflow{
+	height:500px;
+}
+.coverflow_text{
+	text-align:center;
+	font-weight:bold;
+	font-size:50px;
+	color: #707070;
+}
+.instagram_text{
+	font-size: 15px;
+	color: #707070;
+}
+
+
+/***푸ㅡ터*******************************/
+
+
+.footer_inner{
+	margin: 0 auto;
+	width:1358px;
+	height: 215px;
+	margin-bottom: 118px;
+	display:block;
+	margin-top: 87px;
+}
+.copyright {
+	width:450px;
+	float:left;
+	text-align: left;
+	overflow: hidden;
+	box-sizing: border-box;
+	
+}
+.copyright1 {
+	width:420px;
+	float:left;
+	text-align: left;
+	overflow: hidden;
+	box-sizing: border-box;
+	margin-left: 271px;
+	height: 210px;
+}
+.copyright2 {
+	width:120px;
+	float:left;
+	text-align: left;
+	overflow: hidden;
+	box-sizing: border-box;
+	margin-left:80px;
+	height:110px;
+}
+.footer_image{
+	height:50px;
+	float:right;
+	margin-right:200px;
+	margin-top:80px;
+}
+.follow{
+	text-align: center;
+	font-size: 40px;
+	padding-top:8px;
+}
+dt{
+	margin-left: 10px;
+	float: left;
+	padding-top:5px;
+	font-size: 25px;
+	color: #000000;
+}
+.last{
+	padding-top:16px;
+}
+.xi-call-incoming{
+	font-size:35 px;	
+}
+dd{
+	font-size:30px;
+	padding-top:14px;
+	margin-bottom:30px;
+}
+.fa-phone-volume{
+	padding-left:10px;
+	color:#464646;
+}
+.fa-facebook-f{
+	font-size: 25px;
+	padding-left: 9px;
+	color:#464646;
+	
+}
+.fa-instagram{
+	font-size: 25px;
+	padding-left: 20px;
+	color:#464646;
+}
+.fa-twitter{
+	font-size: 25px;
+	padding-left: 20px;
+	color:#464646;
+}
+
+/************************************************/
+/* 모바일 햄버거*/
+/************************************************/
+

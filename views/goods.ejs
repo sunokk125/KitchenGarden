@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<title>kichen garden</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/product.css">
+		<link rel="stylesheet" href="/css/jquery.flipster.min.css">
+		<script src="/js/jquery-3.1.1.min.js"></script>
+        <script src="/js/jquery.flipster.min.js"></script>
+        <script>
+            function total(){
+                var price=$('.price').val();
+                var quan = $('.inp').val();
+                var total = parseInt(price)*parseInt(quan);
+                console.log(total);
+                $('.total_pay1').html(total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            }
+            function plus(){
+                var inp = $('.inp').val();
+                var result = parseInt(inp)+1; 
+                $('.inp').val(result);
+                total()
+            }
+            function minus(){
+                var inp = $('.inp').val();
+                if(inp==0){
+                    alert("더이상 개수를 줄일 수 없습니다.")
+                }else{
+                var result = parseInt(inp)-1; 
+                $('.inp').val(result);
+                total();
+                }
+			}
+			function cart(){
+				var g_id=$('.g_id').val();
+				var quan=$('.inp').val();
+				console.log(g_id+","+quan);
+				$.ajax({
+						url:'/cart',
+						type:'POST',
+						data:{"g_id":g_id,"quan":quan},
+						dataType:'json',
+						success:function(result){
+							if(!result.result){
+								console.log("false");
+								alert("로그인이 필요합니다!");
+								location.href="/login";
+							}else{
+								console.log("success");
+								alert("장바구니에 담았습니다!");
+
+							}
+						
+						}
+					});
+			}
+        </script>
+		
+		<!-- 
+			반응형 했던거
+        <link rel="stylesheet" href="css/tablet.css" media="all and (min-width:900px) and (max-width:1242px)">
+		<link rel="stylesheet" href="css/mobile.css" media="all and (min-width:320px) and (max-width:899px)">
+		-->
+		<script src="https://kit.fontawesome.com/d0c252d761.js" crossorigin="anonymous"></script><!--아이콘 링크 -->
+    </head>
+    <body>
+		
+        <header id="main-header">
+			<!--
+			
+			반응형 모바일 햄버거 눌렀을떄 메뉴
+			<nav id="mobile">
+				<div class="mobile_top">
+				<li>
+					<a href="#">로그인</a>
+				</li>
+					<li>
+						/
+					</li>
+				<li>
+					<a href="#">회원가입</a>
+				</li>
+					
+				<li class="button2"><a href="">
+<img src="Images/cart.png" width="23" height="23"></a></li>
+					<br>
+<li class="button1">
+	<i class="xi-search"></i>
+<input type="text" placeholder="Search.." name="search">
+					</li>
+				</div>
+			<ul>
+				<li> 
+					<a href="">텃밭세트 </a>
+				</li>
+				<li>
+					<a href="">씨앗</a>
+				</li>
+				<li>
+					<a href="">모종</a>
+				</li>
+				<li>
+					<a href="">흙</a>
+				</li>
+				<li>
+					<a href="">화분</a> 
+				</li>
+				<li>
+					<a href="">원예도구</a> 
+				</li>
+			</ul>
+		</nav>
+		<a class="tab" href=""><span>tab</span></a>
+	<div class="dim"></div>
+-->
+          
+			<nav class="header_inner">
+				<div class="header_menu">
+					<!--헤더 메뉴-->
+					<div class="logo">
+						<a href="/">
+							<img src="/images/logo.png" width="300" >
+						</a>
+					</div>
+					<!--
+							반응형 로고
+					<div class="logo_mobile">
+						<img src="images/mobile_logo.png" width="150" >
+					</div>
+					
+					<!----검색버튼 누른후 회색 화면 -->		
+					<div id="myOverlay" class="overlay">
+						<div class="overlay-content">
+							<form action="/search" method="post">
+								<p class="closebtn" onclick="closeSearch()" title="Close Overlay">X</p>
+								<input type="text" placeholder="Search.." name="search">
+								<button type="submit"><i class="fas fa-search"></i></button>
+							</form>
+						</div>
+						
+					</div>	
+				<!----검색버튼 누른후 회색 화면 닫기-->		   
+							
+								
+							
+			<!-- 로그인 -->
+					<ul class="head_btn">
+						<%
+							if(session){
+						%>
+							<li><a href="/mypage"><span>마이페이지</span></a></li>
+							<li><a href="/logout"><span>로그아웃</span></a></li>
+							<li><%=session.name%>님, 어서오세요</li>
+							<li><a href="/cart">
+								<span><i class="fas fa-shopping-cart"></i></span></a></li>
+							<li class="button">
+								<button class="openBtn" onclick="openSearch()">
+									<i class="fas fa-search"></i>
+								</button>
+							</li>
+						<%
+							}else{
+						%>
+							<li><a href="/join"><span>회원가입</span></a></li>
+							<li><a href="/login"><span>로그인</span></a></li>
+							<li class="button">
+								<button class="openBtn" onclick="openSearch()">
+									<i class="fas fa-search"></i>
+								</button>
+							</li>
+						<%
+							}
+						%>
+
+					</ul>
+					<!-- 로그인 닫기-->
+
+					<!-- 서브메뉴 -->
+					<ul class="head_sub">
+
+						<li>
+							<a href="/store">
+								<span>STORE</span>
+							</a>
+						</li>
+						<li>
+							<a href="/recipe">
+								<span>베란다 레시피</span>
+							</a>
+						</li>
+						<li>
+							<a href="/garden">
+								<span>텃밭정보</span>
+							</a>
+						</li>
+						<li>
+							<a href="/calender">
+								<span>파종달력</span>
+							</a>
+						</li>
+						<li>
+							<a href="/farm">
+								<span>온라인 텃밭</span>
+							</a>
+						</li>
+					</ul><!-- 서브메뉴 닫기-->
+				</div><!--헤드인-->
+	<!--헤더 메뉴닫기-->
+	<!--헤더닫기-->
+			</nav>
+		</header>
+        
+        <div id="main"> 
+			<div id="line1">
+				<img src="/images/head_line.png">
+			</div>
+			
+			<!-----온라인 텃밭--->
+			
+			
+			<div id="online_garden_content">
+				<form method="get" action="/order">
+
+					<div class="product_info">
+						<div class="image">
+							<img src="/images/store_seed_img_<%=goods.g_id%>.png" style="padding-left:30px;">
+						</div>
+						<div class="product_info_name">
+							<p class="name"><%=goods.name%><input type="hidden" class="g_id" name="g_id" value="<%=goods.g_id%>"></p>
+							<%
+								var price = goods.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+							%>
+							
+							<span class="pay"><%=price%>원<input type="hidden" class="price" value="<%=goods.price%>"></span>
+						</div>
+						
+						<div class="goods_info">
+							<dl class="list fst">
+								<dt class="tit">판매단위</dt> 
+								<dd class="desc">1팩</dd></dl> 
+							<dl class="list">
+								<dt class="tit">중량/용량</dt> 
+								<dd class="desc">200g</dd></dl> 
+							<dl class="list">
+								<dt class="tit">배송구분</dt> 
+								<dd class="desc">택배배송</dd></dl> 
+							<dl class="list">
+								<dt class="tit">원산지</dt>
+								<dd class="desc"><%=goods.origin%></dd></dl>
+							<dl class="list">
+								<dt class="tit">포장타입</dt> 
+								<dd class="desc">                                    
+									<strong class="emph">택배배송은 에코포장이 스티로폼으로 대체됩니다.</strong></dd></dl>
+							<dl class="list">
+								<dt class="tit">안내사항</dt>
+								<dd class="desc">
+									<span class="txt">해당 상품은 포장 제품입니다.</span></dd></dl> 
+							
+							<dl class="list">
+								<dt class="tit">수량</dt>
+								<dd class="desc">
+									
+									<span class="txt">
+										<div class="option">
+											<span class="count">
+												<button type="button" class="btn down" onclick="minus()">-</button> 
+												<input type="number" readonly="readonly" name="quantity" onfocus="this.blur()" class="inp" value="1"> 
+												<button type="button" class="btn up" onclick="plus()">+</button>
+											</span> 
+										</div>
+									</span>
+								</dd>
+							</dl> 
+						</div><!----> <!---->
+					
+						<div class="total">
+							<span class="total_pay">총 상품 금액 :</span>
+							<span class="total_pay1"><%=price%></span>
+							<span class="total_pay2">원</span>
+							
+							<div class="btn">
+								<input type="button" onclick="cart()" value="장바구니" class="pay_btn">
+								<input type="submit" value="결제하기" class="pay_btn">
+							</div>
+							
+						</div>
+					</div>
+				</form>
+				<div class="more_info" id="prdDetail">
+					<ul class="tab_detail">
+<li class="selected"><a href="#prdDetail">상세정보</a></li>
+                    <li><a href="#prdChange">배송/반품/교환</a></li>
+                </ul>
+				</div>
+					
+				<div class="info_img">
+					<img src="/images/desc_img<%=goods.g_id%>.jpg" style="margin-left: 80px;">
+				</div>
+
+				
+								<div class="more_info" id="prdReview">
+					<ul class="tab_detail">
+<li ><a href="#prdDetail">상세정보</a></li>
+                    <li><a href="#prdChange">배송/반품/교환</a></li>
+                </ul>
+				</div>
+				
+				
+				<div class="cont">
+                    <h2>배송정보</h2><br>
+                    <ul class="delivery">
+<li>
+<strong>배송 방법</strong> : 택배</li>
+<br><li>
+<strong>배송 지역</strong> : 전국지역</li>
+<br><li>
+<strong>배송 비용</strong> : 3,000원</li>
+<br><li>
+<strong>배송 기간</strong> : 1일 ~ 5일</li>
+<br><li>
+<strong>배송 안내</strong> :<br><div>
+<div>배송기간은 주문일(무통장입금은 결제완료일)로부터 영업일기준 1일~5일정도 걸립니다.</div>
+<div><b>구매 순 순차 출고이며, 배송 준비 시작 전까지만 취소가 가능합니다. <font color="#ff3300">* 취소는 반드시 고객센터로 유선연락바랍니다.</font></b></div>
+<div><b>오후 2시 이전 입금에 한해서 당일배송</b>을 해드리고 있습니다.^^</div>
+<div>단, 금요일 오후 2시 이후 결제완료건은 다음주 영업일에 발송되며,</div>
+<div>주말과 공휴일을 지난 다음주 영업일의 경우 출고량이 많아 배송이 1일정도 늦어질 수 있습니다.</div>
+<div>일반배송상품은 5만원 이상 주문시 무료배송되며, 5만원 미만시 3,000원의 배송비가 부여됩니다.</div>
+<div>텃밭상품의 경우 파손 위험이 커 한박스에 여러개를 겹쳐 배송하는데 어려움이 있으니</div>
+<div>여러개 주문시에는 배송료를 문의해주시기 바랍니다.</div>
+<div>제작기간이 별도로 소요되는 상품의 경우에는 상품설명에 있는 제작기간과 배송시기를 숙지해 주시기 바랍니다.</div>
+<div>일부 상품의 경우에는 지역에 따라 별도의 추가 배송비용이 발생할 수 있습니다.</div></div>
+<div><br></div>
+<div><font color="#ff3300">※ 제주, 도서, 산간, 오지 지역 운송 시 배송비는 추가요금이 발생합니다.( 3,000원 + α&nbsp;)</font></div>
+<div>[입금계좌] 신한은행 3333-08-4490152 키친가든</div>
+<div><br></div></li>
+                    </ul>
+<h2>반품/교환</h2><br>
+                    <div class="exchange"><div><b>교환 및 반품시 고객이 왕복배송비를 부담해야 하는 경우</b></div><div>1. 고객의 단순변심 및 판단착오 또는 상세페이지 미확인</div><div>2. 사이즈 변경 및 컬러변경 또는 기타 사유로 반품을 원하는 경우</div><div>3. 촬영 환경 및 모니터 해상도에 따른 상품의 컬러차이로 반품 및 교환을 원하는 경우</div><div><br></div><div><b>교환 및 반품이 절대 불가한 경우</b></div><div>1. 상품을 이미 사용하거나&nbsp;사용 하시려고 씻은 경우</span></div><div>2. 상품 구매 후 한달이 경과한 경우</span><span style="font-size: 9pt;">&nbsp;</span></div><div>3. 고객의 과실로 제품 또는 포장이 훼손되거나 분실한 경우(<span style="font-size: 9pt;">택이나 스티커를 제거했을 경우 포함)</span></div><div>4. 되돌려 보내주신 제품이 배송 중 파손된 경우</div><div>5. 타쇼핑몰 또는 동일 쇼핑몰에서 더 저렴한 상품 확인 후 차액 환불 요청의 경우</div><div><br></div><div><b>무상 교환 및 반품이 가능한 경우</b></div><div>1. 제품 하자 또는 택배사의 실수로 상품이 훼손 또는 분실된 경우</div><div>2. 기타 판매자가 무상 교환 및 반품을 승인한 경우</div></div>
+                </div>
+				
+				
+				
+			</div>
+			</div>
+			
+			
+			
+		
+			
+			
+  <!--메인배너 닫기-->
+
+
+<div id="line"></div>
+			
+		<!--푸터-------------->
+             <div id="footer">
+<div class="footer_inner">
+  <div class="copyright"> 
+	  <img src="/images/footer_logo.png" width="250" style="float:left; padding-left: 10px; padding-top:26px; margin-bottom: 38px;"><br><br>
+	  <dt>SHOP NAME : kichen garden &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;OWNER : 강정우</dt>
+	  <dt>Fax. 02-2222-2222   &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;TEL: 02-2222-2222</dt>
+	  <dt>사업자등록번호 : 2222-22-222222 </dt> 
+	  <dt>소재지: 충청남도 천안시 서북구 성환읍 남서울대학교 </dt> 
+  </div> 
+	
+	
+	
+	  <div class="copyright1">
+		  <dd><i class="fas fa-phone-alt"></i>&ensp;02-2222-2222</dd>
+	  <dt>MON - FRI : PM 1:00 ~ PM 6:00</dt>
+	  <dt>(SAT,SUN,HOLIDAY CLOSED)</dt>
+		  <br><br><br>
+	  <dt class="last">Copyright (c) kichen garden All Rights Reserved</dt> 
+  </div>
+	
+	<div class="copyright2">
+		<dd class="follow">follow</dd>
+		<a href="#"><i class="fab fa-facebook-f"></i></a>
+		<a href="#"><i class="fab fa-instagram"></i></a>
+		<a href="#"> <i class="fab fa-twitter"></i></a>
+	  
+		 
+
+  </div>
+  
+</div>
+				</div>
+			
+<!--푸터-------------->
+        </div> <!-- end container -->
+
+<!-- 제이쿼리,스크립트 -->
+       <script src="/js/scripts.js"></script>
+
+    </body>
+</html>
